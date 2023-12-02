@@ -92,7 +92,6 @@ public class Today implements Initializable {
             @Override
             public ListCell<TodoItem> call(ListView<TodoItem> param) {
                 ListCell<TodoItem> cell = new ListCell<TodoItem>() {
-
                     @Override
                     protected void updateItem(TodoItem item, boolean empty) {
                         super.updateItem(item, empty);
