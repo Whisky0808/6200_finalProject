@@ -1,21 +1,21 @@
 package sample.Data;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
+import java.util.List;
 
 public class OtherData {
     private static OtherData instance = new OtherData();
-    private static String filename = "TodoListOtherItems.txt";
+    private static String filename = "TodoListOtherItems.json";
 
     private ObservableList<OtherItem> OtherItems;
     private DateTimeFormatter formatter;
@@ -41,39 +41,19 @@ public class OtherData {
 //    }
 
     public void loadOtherItems() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule()); // 为处理Java 8日期和时间类型
 
-        OtherItems = FXCollections.observableArrayList();
         Path path = Paths.get(filename);
-        BufferedReader br = Files.newBufferedReader(path);
-
-        String input;
-
-        try {
-            while ((input = br.readLine()) != null) {
-            
-                String[] itemPieces = input.split("\t");
-//                System.out.print(itemPieces[4]);
-
-                String shortDescription = itemPieces[0];
-                String details = itemPieces[1];
-                String category = itemPieces[2];
-                String dateString = itemPieces[3];
-                String priority = itemPieces[4];
-
-                LocalDate date = LocalDate.parse(dateString, formatter);
-                OtherItem OtherItem = new OtherItem(shortDescription, details, category, date,priority);
-                OtherItems.add(OtherItem);
-
-
-
-            }
-
-
-        } finally {
-            if(br != null) {
-                br.close();
-            }
+        // 检查文件是否存在
+        if (!Files.exists(path)) {
+            OtherItems = FXCollections.observableArrayList();
+            return;
         }
+
+        // 读取JSON文件并转换为OtherItem对象列表
+        List<OtherItem> itemList = mapper.readValue(Files.newInputStream(path), new TypeReference<List<OtherItem>>(){});
+        OtherItems = FXCollections.observableArrayList(itemList);
     }
 
     private void OtherItem(OtherItem in_progress) {
@@ -82,26 +62,12 @@ public class OtherData {
 
     public void storeOtherItems() throws IOException {
 
-        Path path = Paths.get(filename);
-        BufferedWriter bw = Files.newBufferedWriter(path);
-        try {
-            Iterator<OtherItem> iter = OtherItems.iterator();
-            while (iter.hasNext()) {
-                OtherItem item = iter.next();
-                bw.write(String.format("%s\t%S\t%s\t%s\t%s",
-                        item.getShortDescription(),
-                        item.getDetails(),
-                        item.getCategory(),
-                        item.getDeadline().format(formatter),
-                		item.getPriority()));
-                bw.newLine();
-            }
+    	ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
 
-        } finally {
-            if(bw != null) {
-                bw.close();
-            }
-        }
+        Path path = Paths.get(filename);
+        // 将OtherItems列表写入JSON文件
+        mapper.writeValue(Files.newOutputStream(path), OtherItems);
 
 
     }

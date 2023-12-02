@@ -13,6 +13,10 @@ public class OtherItem {
     private LocalDate deadline;
     private String priority;
     private BooleanProperty selected = new SimpleBooleanProperty(false);
+    private LocalDate createDate;
+    
+    public OtherItem() {
+    }
 
     public OtherItem(String shortDescription, String details, String category,  LocalDate deadline,String priority) {
         this.shortDescription = shortDescription;
@@ -21,6 +25,7 @@ public class OtherItem {
 
         this.deadline = deadline;
         this.priority = priority;
+        this.createDate = LocalDate.now();
     }
 
     public String getShortDescription() {
@@ -73,5 +78,9 @@ public class OtherItem {
 
 	public void setPriority(String priority) {
 		this.priority = priority;
+	}
+	
+	public LocalDate getcreateDate() {
+		return createDate; 
 	}
 }
