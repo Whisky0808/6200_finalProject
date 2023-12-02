@@ -48,25 +48,25 @@ public class TodoData {
             TodoItem[] itemsArray = mapper.readValue(Files.newBufferedReader(path), TodoItem[].class);
             todoItems = FXCollections.observableArrayList(itemsArray);
 
-            // 更新每个项目的状态
-            for (TodoItem item : todoItems) {
-                updateStatusBasedOnDate(item);
-            }
+//            // 更新每个项目的状态
+//            for (TodoItem item : todoItems) {
+//                updateStatusBasedOnDate(item);
+//            }
         } else {
             todoItems = FXCollections.observableArrayList();
         }
     }
     
-    private void updateStatusBasedOnDate(TodoItem item) {
-        LocalDate date = item.getDeadline();
-        if (date.equals(LocalDate.now())) {
-            item.setCategory("In Progress");
-        } else if (date.isBefore(LocalDate.now().plusWeeks(1))) {
-            item.setCategory("Waiting");
-        } else {
-            item.setCategory("Approved");
-        }
-    }
+//    private void updateStatusBasedOnDate(TodoItem item) {
+//        LocalDate date = item.getDeadline();
+//        if (date.equals(LocalDate.now())) {
+//            item.setCategory("In Progress");
+//        } else if (date.isBefore(LocalDate.now().plusWeeks(1))) {
+//            item.setCategory("Waiting");
+//        } else {
+//            item.setCategory("Approved");
+//        }
+//    }
 
 
 
