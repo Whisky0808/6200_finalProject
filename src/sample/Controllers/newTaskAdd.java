@@ -100,9 +100,9 @@ public class newTaskAdd implements Initializable {
             	 priority = "low";
             }
             if(Category.equals("Waiting") || Category.equals("In Progress")) {
-            	TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,priority));           
+            	TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,priority, false));           
             }else if(Category.equals("Important") || Category.equals("Someday")) {
-            	OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,priority));
+            	OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,priority, false));
             }
             
             clearText();

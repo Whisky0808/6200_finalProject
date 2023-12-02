@@ -17,18 +17,20 @@ public class TodoItem {
     
     private BooleanProperty selected = new SimpleBooleanProperty(false);
     private LocalDate createDate;
+    private boolean completed;
     
     public TodoItem() {
     	
     }
 
-    public TodoItem(String shortDescription, String details, String category,  LocalDate deadline, String priority) {
+    public TodoItem(String shortDescription, String details, String category,  LocalDate deadline, String priority, boolean completed) {
         this.shortDescription = shortDescription;
         this.details = details;
         this.category = category;
         this.deadline = deadline;
         this.priority = priority;
         this.createDate = LocalDate.now();
+        this.completed = completed;
     }
 
     public String getShortDescription() {
@@ -85,6 +87,16 @@ public class TodoItem {
 	public LocalDate getCreateDate() {
         return createDate;
     }
+	
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+	
+	public boolean getCompleted() {
+		return completed;
+	}
+	
+	
 
 
 
