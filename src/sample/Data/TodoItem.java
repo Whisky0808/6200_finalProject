@@ -16,6 +16,11 @@ public class TodoItem {
     private String priority;
     
     private BooleanProperty selected = new SimpleBooleanProperty(false);
+    private LocalDate createDate;
+    
+    public TodoItem() {
+    	
+    }
 
     public TodoItem(String shortDescription, String details, String category,  LocalDate deadline, String priority) {
         this.shortDescription = shortDescription;
@@ -23,6 +28,7 @@ public class TodoItem {
         this.category = category;
         this.deadline = deadline;
         this.priority = priority;
+        this.createDate = LocalDate.now();
     }
 
     public String getShortDescription() {
@@ -76,6 +82,9 @@ public class TodoItem {
 	public void setPriority(String priority) {
 		this.priority = priority;
 	}
+	public LocalDate getCreateDate() {
+        return createDate;
+    }
 
 
 

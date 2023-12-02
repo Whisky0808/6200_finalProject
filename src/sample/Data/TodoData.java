@@ -1,21 +1,20 @@
 package sample.Data;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
 
 public class TodoData {
     private static TodoData instance = new TodoData();
-    private static String filename = "TodoListItems.txt";
+    private static String filename = "TodoListItems.json";
 
     private ObservableList<TodoItem> todoItems;
     private DateTimeFormatter formatter;
@@ -41,132 +40,42 @@ public class TodoData {
 //    }
 
     public void loadTodoItems() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
 
-        todoItems = FXCollections.observableArrayList();
         Path path = Paths.get(filename);
-        BufferedReader br = Files.newBufferedReader(path);
+        if (Files.exists(path)) {
+            TodoItem[] itemsArray = mapper.readValue(Files.newBufferedReader(path), TodoItem[].class);
+            todoItems = FXCollections.observableArrayList(itemsArray);
 
-        String input;
-
-        try {
-            while ((input = br.readLine()) != null) {
-            	
-                String[] itemPieces = input.split("\t");
-
-                String shortDescription = itemPieces[0];
-                String details = itemPieces[1];
-                String category = itemPieces[2];
-                String dateString = itemPieces[3];
-                String priority = itemPieces[4];
-
-                LocalDate date = LocalDate.parse(dateString, formatter);
-
-                do{
-                    if(date.equals(LocalDate.now())){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "In Progress", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.equals(LocalDate.now().plusDays(1))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Waiting", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isAfter(LocalDate.now().plusDays(2))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Waiting", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isAfter(LocalDate.now().plusDays(3))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Waiting", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isAfter(LocalDate.now().plusDays(4))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Waiting", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isAfter(LocalDate.now().plusDays(5))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Waiting", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isAfter(LocalDate.now().plusDays(6))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Waiting", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isAfter(LocalDate.now().plusDays(7))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Waiting", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isAfter(LocalDate.now().plusWeeks(1))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Approved", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isBefore(LocalDate.now().plusDays(1))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Approved", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isBefore(LocalDate.now().plusDays(2))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Approved", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isBefore(LocalDate.now().plusDays(3))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Approved", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isBefore(LocalDate.now().plusDays(4))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Approved", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isBefore(LocalDate.now().plusDays(5))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Approved", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isBefore(LocalDate.now().plusDays(6))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Approved", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }else if(date.isBefore(LocalDate.now().plusDays(7))){
-                        TodoItem todoItem = new TodoItem(shortDescription, details, "Approved", date,priority);
-                        todoItems.add(todoItem);
-                        break;
-                    }
-                }while (dateString.equals(null));
-
+            // 更新每个项目的状态
+            for (TodoItem item : todoItems) {
+                updateStatusBasedOnDate(item);
             }
-
-
-        } finally {
-            if(br != null) {
-                br.close();
-            }
+        } else {
+            todoItems = FXCollections.observableArrayList();
+        }
+    }
+    
+    private void updateStatusBasedOnDate(TodoItem item) {
+        LocalDate date = item.getDeadline();
+        if (date.equals(LocalDate.now())) {
+            item.setCategory("In Progress");
+        } else if (date.isBefore(LocalDate.now().plusWeeks(1))) {
+            item.setCategory("Waiting");
+        } else {
+            item.setCategory("Approved");
         }
     }
 
 
 
     public void storeTodoItems() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
 
         Path path = Paths.get(filename);
-        BufferedWriter bw = Files.newBufferedWriter(path);
-        try {
-            Iterator<TodoItem> iter = todoItems.iterator();
-            while (iter.hasNext()) {
-                TodoItem item = iter.next();
-                bw.write(String.format("%s\t%S\t%s\t%s\t%s",
-                        item.getShortDescription(),
-                        item.getDetails(),
-                        item.getCategory(),
-                        item.getDeadline().format(formatter),
-                		item.getPriority()));
-                bw.newLine();
-                
-            }
-//            System.out.print("we have wrote the items you created");
-
-        } finally {
-            if(bw != null) {
-                bw.close();
-            }
-        }
-
-
+        mapper.writeValue(Files.newBufferedWriter(path), todoItems);
     }
 
     public void deleteTodoItem(TodoItem item) {
