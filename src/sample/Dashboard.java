@@ -70,7 +70,7 @@ public class Dashboard implements Initializable {
 
 
         try {
-            Parent fxml = FXMLLoader.load(getClass().getResource("View/Today6200.fxml"));
+            Parent fxml = FXMLLoader.load(getClass().getResource("View/Upcomming6200.fxml"));
             contentArea.getChildren().removeAll();
             contentArea.getChildren().setAll(fxml);
 

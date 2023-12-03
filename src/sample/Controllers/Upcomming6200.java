@@ -27,17 +27,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class Today6200 implements Initializable {
+public class Upcomming6200 implements Initializable {
     private int showMode;
-    private TodayContexMenu menu;
+    private FutureContexMenu menu;
     private SortedList<TodoItem> sortedView;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private Predicate<TodoItem> FilterToday;
-    private FilteredList<TodoItem> TodayItems;
+    private Predicate<TodoItem> FilterFuture;
+    private FilteredList<TodoItem> FutureItems;
     @FXML
     private ListView<TodoItem> TitleView;
     @FXML
-    private ListView<TodoItem> PriorityView;
+    private ListView<TodoItem> DeadlineView;
     @FXML
     private TextArea DescriptionView;
     @FXML Label CreateTimeLabel;
@@ -83,7 +83,7 @@ public class Today6200 implements Initializable {
         );
     }
     private void TitleViewInitialize(){
-        TitleView.setItems(TodayItems);
+        TitleView.setItems(FutureItems);
         TitleView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 setSelected(null);
@@ -119,15 +119,16 @@ public class Today6200 implements Initializable {
                                     TitleView.widthProperty().get() - 20, TitleView.widthProperty()));
                             hBox.setSpacing(10);
                             setGraphic(hBox);
+                            setStyle("-fx-background-color:"+getPriorityColor(item)+";");
                         }
                     }
                 };
             }
         });
     }
-    private void PriorityViewInitialize(){
-        PriorityView.setItems(TodayItems);
-        PriorityView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
+    private void DeadlineViewInitialize(){
+        DeadlineView.setItems(FutureItems);
+        DeadlineView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
             @Override
             public ListCell<TodoItem> call(ListView<TodoItem> param) {
                 return new ListCell<TodoItem>(){
@@ -138,7 +139,8 @@ public class Today6200 implements Initializable {
                             setText(null);
                             setGraphic(null);
                         }  else {
-                            setStyle("-fx-background-color:"+getPriorityColor(item)+";");
+                            setText(item.getDeadline().format(formatter));
+
                         }
                     }
                 };
@@ -158,26 +160,26 @@ public class Today6200 implements Initializable {
         );
     }
     private void LoadTodayItems(){
-        FilterToday=(TodoItem)-> TodoItem.getDeadline().equals(LocalDate.now());
-        TodayItems=new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(), FilterToday);
+        FilterFuture=(TodoItem)-> TodoItem.getDeadline().isAfter(LocalDate.now());
+        FutureItems=new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(), FilterFuture);
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showMode=0;
+        menu=new FutureContexMenu(TitleView,this);
         LoadTodayItems();
-        menu=new TodayContexMenu(TitleView,this);
         DescriptionInitialize();
         TitleViewInitialize();
-        PriorityViewInitialize();
+        DeadlineViewInitialize();
         LabelInitialize();
     }
     public void refresh(){
         LoadTodayItems();
         TitleView.setItems(FXCollections.observableArrayList());
-        PriorityView.setItems(FXCollections.observableArrayList());
+        DeadlineView.setItems(FXCollections.observableArrayList());
         if(showMode==0) {
-            TitleView.setItems(TodayItems);
-            PriorityView.setItems(TodayItems);
+            TitleView.setItems(FutureItems);
+            DeadlineView.setItems(FutureItems);
         }
 
     }
