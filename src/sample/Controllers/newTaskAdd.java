@@ -95,7 +95,7 @@ public class newTaskAdd implements Initializable {
             boolean Hpriority = hightPriority.isSelected();
             boolean Lpriority = lowPriority.isSelected();
             if(Hpriority) {
-            	 priority = "height";
+            	 priority = "hight";
      
             }else if(Lpriority) {
             	 priority = "low";
