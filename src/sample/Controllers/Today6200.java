@@ -1,26 +1,22 @@
 package sample.Controllers;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 import sample.Data.TodoData;
 import sample.Data.TodoItem;
 
@@ -32,6 +28,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class Today6200 implements Initializable {
+    private TodayContexMenu menu;
     private SortedList<TodoItem> sortedView;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private Predicate<TodoItem> FilterToday;
@@ -46,11 +43,16 @@ public class Today6200 implements Initializable {
     @FXML Label CategoryLabel;
     private final ObjectProperty<TodoItem> selectedItem=new SimpleObjectProperty<>(null);
 
+    @FXML public void showMenu(ContextMenuEvent event){
+        if(TitleView.getSelectionModel().getSelectedItem()!=null) {
+            menu.show(event);
+        }
+    }
+
     @FXML
     public void TitleViewClick(MouseEvent e){
         setSelected(TitleView.getSelectionModel().getSelectedItem());
     }
-
     private void setSelected(TodoItem item){
         selectedItem.set(item);
     }
@@ -81,13 +83,17 @@ public class Today6200 implements Initializable {
     }
     private void TitleViewInitialize(){
         TitleView.setItems(TodayItems);
+        TitleView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                setSelected(null);
+            }
+        });
         TitleView.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
-            // 首先执行您想要的操作
+            menu.hide();
             TitleView.getSelectionModel().clearSelection();
             selectedItem.set(null);
         });
         TitleView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
-
             @Override
             public ListCell<TodoItem> call(ListView<TodoItem> param) {
 
@@ -150,17 +156,22 @@ public class Today6200 implements Initializable {
                 }, selectedItem)
         );
     }
-    @Override
 
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         FilterToday=(TodoItem)-> TodoItem.getDeadline().equals(LocalDate.now());
         TodayItems=new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(), FilterToday);
+        menu=new TodayContexMenu(TitleView,this);
         DescriptionInitialize();
         TitleViewInitialize();
         PriorityViewInitialize();
         LabelInitialize();
     }
     public void refresh(){
-        TodayItems=new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(), FilterToday);
+        TitleView.setItems(FXCollections.observableArrayList());
+        PriorityView.setItems(FXCollections.observableArrayList());
+        TitleView.setItems(TodayItems);
+        PriorityView.setItems(TodayItems);
+
     }
 }
