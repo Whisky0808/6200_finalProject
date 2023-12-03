@@ -1,6 +1,7 @@
 package sample.Controllers;
 
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -12,6 +13,8 @@ import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
@@ -20,9 +23,7 @@ import sample.Data.TodoItem;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class Today6200 implements Initializable {
@@ -39,9 +40,19 @@ public class Today6200 implements Initializable {
 
 
 
-
+    private String getcheckUrl(TodoItem item){
+        return "";
+    }
     private String getCategoryUrl(TodoItem item){
         return "";
+    }
+    private String getPriorityColor(TodoItem item){
+        Map<String, String> map = new HashMap<String, String>() {{
+            put("high", "red");
+            put("low", "green");
+            put("medium","yellow");
+        }};
+        return map.get(item.getPriority());
     }
     @Override
 
@@ -52,6 +63,24 @@ public class Today6200 implements Initializable {
         TitleView.setItems(TodayItems);
         PriorityView.setItems(TodayItems);
 
+
+        PriorityView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
+            @Override
+            public ListCell<TodoItem> call(ListView<TodoItem> param) {
+                return new ListCell<TodoItem>(){
+                    @Override
+                    protected void updateItem(TodoItem item,boolean empty){
+                        super.updateItem(item,empty);
+                        if (empty || item == null) {
+                            setText(null);
+                            setGraphic(null);
+                        }  else {
+                            setStyle("-fx-background-color:"+getPriorityColor(item)+";");
+                        }
+                    }
+                };
+            }
+        });
         TitleView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
 
             @Override
@@ -68,12 +97,15 @@ public class Today6200 implements Initializable {
                             setText(null);
                             setGraphic(null);
                         }  else {
-                            imageView1.setImage(new Image("https://media-public.canva.com/k0FkQ/MAFeXuk0FkQ/1/tl.png", 32, 32, true, true));
+                            imageView1.setImage(new Image("/sample/img/close.png", 20, 20, true, true));
                             label.setText(item.getShortDescription());
-                            imageView2.setImage(new Image("https://media-public.canva.com/k0FkQ/MAFeXuk0FkQ/1/tl.png", 32, 32, true, true));
-
+                            imageView2.setImage(new Image("/sample/img/close.png", 20, 20, true, true));
+                            Region spacer = new Region();
+                            HBox.setHgrow(spacer, Priority.ALWAYS);
                             // 创建一个水平盒子并添加图像和文本
-                            HBox hBox = new HBox(imageView1, label, imageView2);
+                            HBox hBox = new HBox(imageView1, label, spacer, imageView2);
+                            hBox.prefWidthProperty().bind(Bindings.createDoubleBinding(() ->
+                                    TitleView.widthProperty().get() - 20, TitleView.widthProperty()));
                             hBox.setSpacing(10);
                             setGraphic(hBox);
                         }
