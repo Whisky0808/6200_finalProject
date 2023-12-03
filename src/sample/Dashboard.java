@@ -170,7 +170,7 @@ public class Dashboard implements Initializable {
     }
     double x,y = 0;
     public void addOncePage() throws Exception{
-    	System.out.print("fff");
+    
     	Parent root = FXMLLoader.load(getClass().getResource("View/newQuickTask.fxml"));
     	Stage stage = new Stage();
 

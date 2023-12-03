@@ -61,19 +61,20 @@ public class newTaskAdd implements Initializable {
 			stage.close();
 			
 		});
-		Deadline.valueProperty().addListener(
-				(observable, oldValue, newValue) ->{
-					if (newValue.equals(LocalDate.now())) {
-					    Categories.getItems().setAll("In Progress", "Someday", "Important");
-					} else if (newValue.isBefore(LocalDate.now().plusDays(1))) {
-					    Categories.getItems().setAll("Approved", "Someday", "Important");
-					} else if (newValue.isBefore(LocalDate.now().plusDays(8))) {
-					    Categories.getItems().setAll("Waiting", "Someday", "Important");
-					} else {
-					    Categories.getItems().setAll("");
-					}
-					
-				});		
+		 Categories.getItems().setAll("Daily", "Work", "Study","Others");
+//		Deadline.valueProperty().addListener(
+//				(observable, oldValue, newValue) ->{
+//					if (newValue.equals(LocalDate.now())) {
+//					    Categories.getItems().setAll("In Progress", "Someday", "Important");
+//					} else if (newValue.isBefore(LocalDate.now().plusDays(1))) {
+//					    Categories.getItems().setAll("Approved", "Someday", "Important");
+//					} else if (newValue.isBefore(LocalDate.now().plusDays(8))) {
+//					    Categories.getItems().setAll("Waiting", "Someday", "Important");
+//					} else {
+//					    Categories.getItems().setAll("");
+//					}
+//					
+//				});		
 	}
 	
 	@FXML
@@ -93,16 +94,20 @@ public class newTaskAdd implements Initializable {
             LocalDate deadValue = Deadline.getValue();
             boolean Hpriority = hightPriority.isSelected();
             boolean Lpriority = lowPriority.isSelected();
+            boolean completed = false;
+            
             if(Hpriority) {
-            	 priority = "height";
+            	 priority = "hight";
      
             }else if(Lpriority) {
             	 priority = "low";
             }
-            if(Category.equals("Waiting") || Category.equals("In Progress")) {
-            	TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,priority, false));           
-            }else if(Category.equals("Important") || Category.equals("Someday")) {
-            	OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,priority, false));
+
+            if(Category.equals("Study") || Category.equals("Work")) {
+            	TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,priority,completed));           
+            }else if(Category.equals("Daily") || Category.equals("Others")) {
+            	OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,priority,completed));
+
             }
             
             clearText();
