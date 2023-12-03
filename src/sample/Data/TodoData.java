@@ -69,7 +69,9 @@ public class TodoData {
     }
 
 
-
+    public DateTimeFormatter getFormatter(){
+        return formatter;
+    }
     public void storeTodoItems() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
