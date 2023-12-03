@@ -115,7 +115,7 @@ public class Addnew implements Initializable {
             
 
 
-                TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,Priority));
+                TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,Priority, false));
 
             }else if(Category1.equals("In Progress")){
                 String shortDescription = Description.getText();
@@ -134,7 +134,7 @@ public class Addnew implements Initializable {
                 }
 
 
-                TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,Priority));
+                TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,Priority, false));
 
             }else if(Category1.equals("Important")){
                 String shortDescription = Description.getText();
@@ -152,7 +152,7 @@ public class Addnew implements Initializable {
                 	 Priority = "low";
                 }
 
-                OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,Priority));
+                OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,Priority, false));
 
 
             }else if(Category1.equals("Someday")){
@@ -171,7 +171,7 @@ public class Addnew implements Initializable {
                 	 Priority = "low";
                 }
 
-                OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,Priority));
+                OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,Priority, false));
 
 
             }

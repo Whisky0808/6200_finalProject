@@ -43,7 +43,7 @@ public class addTaskOnce implements Initializable {
       
             
             
-            TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,priority));           
+            TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,priority, false));           
            
             Stage stage = (Stage) window.getScene().getWindow();
             stage.close();
