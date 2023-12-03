@@ -94,16 +94,20 @@ public class newTaskAdd implements Initializable {
             LocalDate deadValue = Deadline.getValue();
             boolean Hpriority = hightPriority.isSelected();
             boolean Lpriority = lowPriority.isSelected();
+            boolean completed = false;
+            
             if(Hpriority) {
             	 priority = "hight";
      
             }else if(Lpriority) {
             	 priority = "low";
             }
+
             if(Category.equals("Study") || Category.equals("Work")) {
-            	TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,priority));           
+            	TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,priority,completed));           
             }else if(Category.equals("Daily") || Category.equals("Others")) {
-            	OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,priority));
+            	OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,priority,completed));
+
             }
             
             clearText();
