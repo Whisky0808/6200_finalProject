@@ -47,6 +47,14 @@ public class TodoData {
         if (Files.exists(path)) {
             TodoItem[] itemsArray = mapper.readValue(Files.newBufferedReader(path), TodoItem[].class);
             todoItems = FXCollections.observableArrayList(itemsArray);
+            
+         // 遍历每个项目，更新 "daily" 类别的项目的 deadline
+            for (TodoItem item : todoItems) {
+                if ("Daily".equals(item.getCategory())) {
+                    item.setDeadline(LocalDate.now());
+                    
+                }
+            }
 
 //            // 更新每个项目的状态
 //            for (TodoItem item : todoItems) {
