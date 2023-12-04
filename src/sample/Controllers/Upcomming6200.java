@@ -63,8 +63,15 @@ public class Upcomming6200 implements Initializable {
     private void setSelected(TodoItem item){
         selectedItem.set(item);
     }
+
     private String getcheckUrl(TodoItem item){
-        return "";
+
+        if (item.isSelected()){
+            return "/sample/img/check.png";
+        }
+        else{
+            return "/sample/img/close.png";
+        }
     }
     private String getCategoryUrl(TodoItem item){
         switch (item.getCategory()) {
@@ -131,7 +138,7 @@ public class Upcomming6200 implements Initializable {
                         }  else {
                             imageView1.setImage(new Image(getCategoryUrl(item), 22, 22, true, true));
                             label.setText(item.getShortDescription());
-                            imageView2.setImage(new Image("/sample/img/close.png", 22, 22, true, true));
+                            imageView2.setImage(new Image(getcheckUrl(item), 22, 22, true, true));
                             Region spacer = new Region();
                             HBox.setHgrow(spacer, Priority.ALWAYS);
                             HBox hBox = new HBox(imageView1, label, spacer, imageView2);

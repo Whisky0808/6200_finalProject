@@ -1,5 +1,6 @@
 package sample.Controllers;
 import javafx.scene.control.*;
+import javafx.scene.input.ContextMenuEvent;
 import sample.Data.TodoData;
 import sample.Data.TodoItem;
 public class TodayContexMenu extends MycontexMenu<TodoItem>{
@@ -29,8 +30,36 @@ public class TodayContexMenu extends MycontexMenu<TodoItem>{
             bindList.getSelectionModel().getSelectedItem().setPriority("low");
             control.refresh();
         });
+
         CheckMenuItem checkMenuItem = new CheckMenuItem("Complete");
+        checkMenuItem.setOnAction(e->{
+            if (!(bindList.getSelectionModel().getSelectedItem().isSelected())) {
+                checkMenuItem.setSelected(true);
+                bindList.getSelectionModel().getSelectedItem().setSelected(true);
+                control.refresh();
+            }
+            else{
+                checkMenuItem.setSelected(false);
+                bindList.getSelectionModel().getSelectedItem().setSelected(false);
+                control.refresh();
+            }
+            control.refresh();
+        });
         menu.getItems().addAll(Priority, deleteItem, checkMenuItem);
         Priority.getItems().addAll(option1,option2);
+    }
+    @Override
+    public void show(ContextMenuEvent e){
+        CheckMenuItem foundItem = null;
+        for (MenuItem item : menu.getItems()) {
+            if (item instanceof CheckMenuItem && "Complete".equals(item.getText())) {
+                foundItem = (CheckMenuItem) item;
+                break;
+            }
+        }
+        if(foundItem!=null){
+            foundItem.setSelected(bindList.getSelectionModel().getSelectedItem().isSelected());
+        }
+        menu.show(bindList,e.getScreenX(),e.getScreenY());
     }
 }
