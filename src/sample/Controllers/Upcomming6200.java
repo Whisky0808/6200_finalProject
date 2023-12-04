@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.Event;
@@ -35,11 +36,13 @@ import java.util.function.Predicate;
 public class Upcomming6200 implements Initializable {
     String css = this.getClass().getResource("/sample/Style/ShowTask.css").toExternalForm();
     private int showMode;
+    int startindex;
     private FutureContexMenu menu;
     private SortedList<TodoItem> sortedView;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private Predicate<TodoItem> FilterFuture;
     private FilteredList<TodoItem> FutureItems;
+    private FilteredList<TodoItem> ShowItems;
     @FXML
     private ListView<TodoItem> TitleView;
     @FXML
@@ -109,7 +112,9 @@ public class Upcomming6200 implements Initializable {
     }
     private void TitleViewInitialize(){
         TitleView.getStylesheets().add(css);
-        TitleView.setItems(FutureItems);
+        TitleView.addEventFilter(ScrollEvent.SCROLL, Event::consume);
+        TitleView.getStylesheets().add(css);
+        TitleView.setItems(ShowItems);
         TitleView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 setSelected(null);
@@ -215,7 +220,9 @@ public class Upcomming6200 implements Initializable {
         });
     }
     private void DeadlineViewInitialize(){
-        DeadlineView.setItems(FutureItems);
+        DeadlineView.getStylesheets().add(css);
+        DeadlineView.addEventFilter(ScrollEvent.SCROLL, Event::consume);
+        DeadlineView.setItems(ShowItems);
         DeadlineView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
             @Override
             public ListCell<TodoItem> call(ListView<TodoItem> param) {
@@ -258,11 +265,19 @@ public class Upcomming6200 implements Initializable {
         FilterFuture=(TodoItem)-> TodoItem.getDeadline().isAfter(LocalDate.now());
         FutureItems=new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(), FilterFuture);
     }
+    private void LoadShowItems(){
+        ShowItems = new FilteredList<TodoItem>(FutureItems, s -> {
+            int index = FutureItems.indexOf(s);
+            return index >= startindex && index < Math.min(startindex + 17, FutureItems.size());
+        });
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showMode=0;
         menu=new FutureContexMenu(TitleView,this);
         LoadTodayItems();
+        startindex=0;
+        LoadShowItems();
         DescriptionInitialize();
         TitleViewInitialize();
         DeadlineViewInitialize();
@@ -270,6 +285,8 @@ public class Upcomming6200 implements Initializable {
     }
     public void refresh(){
         LoadTodayItems();
+        startindex=0;
+        LoadShowItems();
         TitleView.setItems(FXCollections.observableArrayList());
         DeadlineView.setItems(FXCollections.observableArrayList());
         if(showMode==0) {

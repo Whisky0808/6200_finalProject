@@ -1,9 +1,12 @@
 package sample.Controllers;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.Event;
@@ -21,6 +24,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 import javafx.util.Callback;
 import sample.Data.TodoData;
 import sample.Data.TodoItem;
@@ -33,12 +38,16 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class Today6200 implements Initializable {
+    String css = this.getClass().getResource("/sample/Style/ShowTask.css").toExternalForm();
     private int showMode;
     private TodayContexMenu menu;
     private SortedList<TodoItem> sortedView;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private Predicate<TodoItem> FilterToday;
+    int startindex;
     private FilteredList<TodoItem> TodayItems;
+    private FilteredList<TodoItem> ShowItems;
+
     @FXML
     private ListView<TodoItem> TitleView;
     @FXML
@@ -47,6 +56,8 @@ public class Today6200 implements Initializable {
     private TextArea DescriptionView;
     @FXML Label CreateTimeLabel;
     @FXML Label CategoryLabel;
+    @FXML Polygon PrevPage;
+    @FXML Polygon NextPage;
     private final ObjectProperty<TodoItem> selectedItem=new SimpleObjectProperty<>(null);
 
     @FXML public void showMenu(ContextMenuEvent event){
@@ -58,6 +69,22 @@ public class Today6200 implements Initializable {
     @FXML
     public void TitleViewClick(MouseEvent e){
         setSelected(TitleView.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    public void ToNextPage(MouseEvent e){
+        int tar=startindex+17;
+        if(tar>=TodayItems.size()){
+            return;
+        }
+        else{
+            startindex=tar;
+        }
+        refresh();
+    }
+    @FXML void ToPrevPage(MouseEvent e){
+        startindex= Math.max(startindex - 17, 0);
+        refresh();
     }
     private void setSelected(TodoItem item){
         selectedItem.set(item);
@@ -107,7 +134,9 @@ public class Today6200 implements Initializable {
         );
     }
     private void TitleViewInitialize(){
-        TitleView.setItems(TodayItems);
+        TitleView.getStylesheets().add(css);
+        TitleView.addEventFilter(ScrollEvent.SCROLL, Event::consume);
+        TitleView.setItems(ShowItems);
         TitleView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 setSelected(null);
@@ -197,7 +226,9 @@ public class Today6200 implements Initializable {
         });
     }
     private void PriorityViewInitialize(){
-        PriorityView.setItems(TodayItems);
+        PriorityView.getStylesheets().add(css);
+        PriorityView.addEventFilter(ScrollEvent.SCROLL, Event::consume);
+        PriorityView.setItems(ShowItems);
         PriorityView.addEventFilter(MouseEvent.MOUSE_PRESSED, Event::consume);
         PriorityView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
             @Override
@@ -243,10 +274,18 @@ public class Today6200 implements Initializable {
         FilterToday=(TodoItem)-> TodoItem.getDeadline().equals(LocalDate.now());
         TodayItems=new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(), FilterToday);
     }
+    private void LoadShowItems(){
+        ShowItems = new FilteredList<TodoItem>(TodayItems, s -> {
+            int index = TodayItems.indexOf(s);
+            return index >= startindex && index < Math.min(startindex + 17, TodayItems.size());
+        });
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        startindex=0;
         showMode=0;
         LoadTodayItems();
+        LoadShowItems();
         menu=new TodayContexMenu(TitleView,this);
         DescriptionInitialize();
         TitleViewInitialize();
@@ -255,11 +294,12 @@ public class Today6200 implements Initializable {
     }
     public void refresh(){
         LoadTodayItems();
+        LoadShowItems();
         TitleView.setItems(FXCollections.observableArrayList());
         PriorityView.setItems(FXCollections.observableArrayList());
         if(showMode==0) {
-            TitleView.setItems(TodayItems);
-            PriorityView.setItems(TodayItems);
+            TitleView.setItems(ShowItems);
+            PriorityView.setItems(ShowItems);
         }
 
     }
