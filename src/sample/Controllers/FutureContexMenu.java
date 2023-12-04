@@ -1,8 +1,14 @@
 package sample.Controllers;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import sample.Data.TodoData;
 import sample.Data.TodoItem;
+
+import java.time.LocalDate;
+
 public class FutureContexMenu extends MycontexMenu<TodoItem>{
     private Upcomming6200 control;
     FutureContexMenu(ListView<TodoItem> l, Upcomming6200 instance){
@@ -18,6 +24,27 @@ public class FutureContexMenu extends MycontexMenu<TodoItem>{
         MenuItem option1 = new MenuItem("high");
         MenuItem option2 = new MenuItem("low");
         MenuItem deleteItem = new MenuItem("Delete");
+        MenuItem EditDate = new MenuItem("EditDeadline");
+        EditDate.setOnAction(e->{
+            Stage popup = new Stage();
+            popup.setTitle("Edit");
+            DatePicker datePicker = new DatePicker();
+            datePicker.setOnAction(event -> {
+                LocalDate selectedDate = datePicker.getValue();
+                TodoItem selectedItem = bindList.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    selectedItem.setDeadline(selectedDate);
+                    control.refresh();
+                }
+                popup.close();
+            });
+            VBox layout = new VBox(20, datePicker);
+            layout.setPrefHeight(40);
+            layout.setPrefWidth(250);
+            Scene scene = new Scene(layout);
+            popup.setScene(scene);
+            popup.show();
+        });
         deleteItem.setOnAction(e->{
             TodoData.getInstance().deleteTodoItem(bindList.getSelectionModel().getSelectedItem());
             control.refresh();
@@ -44,7 +71,7 @@ public class FutureContexMenu extends MycontexMenu<TodoItem>{
             }
             control.refresh();
         });
-        menu.getItems().addAll(Priority, deleteItem, checkMenuItem);
+        menu.getItems().addAll(EditDate,Priority, deleteItem, checkMenuItem);
         Priority.getItems().addAll(option1,option2);
     }
     @Override
