@@ -43,7 +43,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="TOP_LEFT" buttonType="RAISED" onAction="#Previous" prefHeight="25.0" prefWidth="173.0" text="Previous">
+                  <JFXButton alignment="TOP_LEFT" buttonType="RAISED" onAction="#Previous" prefHeight="25.0" prefWidth="173.0" text="Past">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -63,12 +63,12 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <JFXButton buttonType="RAISED" layoutX="19.0" layoutY="570.0" onAction="#Addnew" prefHeight="52.0" prefWidth="232.0" style="-fx-background-color: #4DBCFF; -fx-background-radius: 10px;" text="Multiple +" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="19.0" layoutY="570.0" onAction="#Addnew" prefHeight="52.0" prefWidth="232.0" style="-fx-background-color: #4DBCFF; -fx-background-radius: 10px;" text="Add Task +" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="19.0" layoutY="505.0" onAction="#Addonce" prefHeight="52.0" prefWidth="232.0" style="-fx-background-color: #4DBCFF; -fx-background-radius: 10px;" text="Quick +" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="19.0" layoutY="505.0" onAction="#Addonce" prefHeight="52.0" prefWidth="232.0" style="-fx-background-color: #4DBCFF; -fx-background-radius: 10px;" text="Quick Add" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
