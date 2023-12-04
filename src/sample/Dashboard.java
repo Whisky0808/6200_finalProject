@@ -80,14 +80,6 @@ public class Dashboard implements Initializable {
     }
 
     @FXML
-    private void Inbox(javafx.event.ActionEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("View/Inbox.fxml"));
-        contentArea.getChildren().removeAll();
-        contentArea.getChildren().setAll(fxml);
-
-    }
-
-    @FXML
     private void Today(javafx.event.ActionEvent event) throws IOException {
         Parent fxml = FXMLLoader.load(getClass().getResource("View/Today6200.fxml"));
         contentArea.getChildren().removeAll();
@@ -131,40 +123,9 @@ public class Dashboard implements Initializable {
     }
 
     @FXML
-    private void Someday(javafx.event.ActionEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("View/Someday.fxml"));
-        contentArea.getChildren().removeAll();
-        contentArea.getChildren().setAll(fxml);
-        try{
-            TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
-        }catch (IOException exception){
-            System.out.println(exception.getMessage());
-        }
-
-    }
-
-    @FXML
-    private void Trash(javafx.event.ActionEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("View/Trash.fxml"));
-        contentArea.getChildren().removeAll();
-        contentArea.getChildren().setAll(fxml);
-        try{
-
-            TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
-
-        }catch (IOException exception){
-            System.out.println(exception.getMessage());
-        }
-    }
-    
-    @FXML
     void Addonce (ActionEvent event) throws Exception {
     	addOncePage();
     }
-    
-    
 
     @FXML
     void Addnew(ActionEvent event) throws Exception {
