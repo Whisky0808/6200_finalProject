@@ -127,6 +127,7 @@ public class Upcomming6200 implements Initializable {
                         if (empty || item == null) {
                             setText(null);
                             setGraphic(null);
+                            setBackground(null);
                         }  else {
                             imageView1.setImage(new Image(getCategoryUrl(item), 22, 22, true, true));
                             label.setText(item.getShortDescription());
@@ -219,6 +220,7 @@ public class Upcomming6200 implements Initializable {
                         if (empty || item == null) {
                             setText(null);
                             setGraphic(null);
+                            setBackground(null);
                         }  else {
                             setText(item.getDeadline().format(formatter));
 
