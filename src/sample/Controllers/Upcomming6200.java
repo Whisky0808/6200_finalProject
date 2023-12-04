@@ -109,9 +109,9 @@ public class Upcomming6200 implements Initializable {
     }
     private Color getPriorityColor(TodoItem item){
         Map<String, Color> map = new HashMap<String, Color>() {{
-            put("high", Color.RED);
-            put("low", Color.GREEN);
-            put("medium",Color.YELLOW);
+            put("High", Color.web("#ef7474"));
+            put("Low", Color.web("#63f451"));
+            put("Medium",Color.web("#ebf451"));
         }};
         return map.get(item.getPriority());
     }

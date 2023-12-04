@@ -6,9 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.Data.OtherData;
 import sample.Data.TodoData;
-
 import java.io.IOException;
 import sample.Controllers.Today6200;
 public class Main extends Application {
@@ -42,7 +40,6 @@ public class Main extends Application {
     public void stop() throws Exception {
         try {
             TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
 
         } catch(IOException e) {
             System.out.println(e.getMessage());
@@ -54,7 +51,6 @@ public class Main extends Application {
         try {
             
             TodoData.getInstance().loadTodoItems();
-            OtherData.getInstance().loadOtherItems();
 
         } catch(IOException e) {
             throw e;

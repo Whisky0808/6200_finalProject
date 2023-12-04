@@ -11,7 +11,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.Data.OtherData;
 import sample.Data.TodoData;
 
 import java.io.IOException;
@@ -46,7 +45,6 @@ public class Dashboard implements Initializable {
             try{
 
                 TodoData.getInstance().storeTodoItems();
-                OtherData.getInstance().storeOtherItems();
 
 
             }catch (IOException exception){
@@ -87,7 +85,6 @@ public class Dashboard implements Initializable {
         try{
 
             TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
 
         }catch (IOException exception){
             System.out.println(exception.getMessage());
@@ -101,7 +98,6 @@ public class Dashboard implements Initializable {
         contentArea.getChildren().setAll(fxml);
         try{
             TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
         }catch (IOException exception){
             System.out.println(exception.getMessage());
         }
@@ -116,7 +112,6 @@ public class Dashboard implements Initializable {
         contentArea.getChildren().setAll(fxml);
         try{
             TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
         }catch (IOException exception){
             System.out.println(exception.getMessage());
         }

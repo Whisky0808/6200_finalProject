@@ -23,8 +23,8 @@ public class TodayContexMenu extends MycontexMenu<TodoItem>{
         menu = new ContextMenu();
         Menu Priority=new Menu("Set Priority");
         Menu Category=new Menu("Set Category");
-        MenuItem option1 = new MenuItem("high");
-        MenuItem option2 = new MenuItem("low");
+        MenuItem option1 = new MenuItem("High");
+        MenuItem option2 = new MenuItem("Low");
         MenuItem option3= new MenuItem("Daily");
         MenuItem option4 = new MenuItem("Work");
         MenuItem option5 = new MenuItem("Study");
@@ -56,11 +56,11 @@ public class TodayContexMenu extends MycontexMenu<TodoItem>{
             control.refresh();
         });
         option1.setOnAction(e->{
-            bindList.getSelectionModel().getSelectedItem().setPriority("high");
+            bindList.getSelectionModel().getSelectedItem().setPriority("High");
             control.refresh();
         });
         option2.setOnAction(e->{
-            bindList.getSelectionModel().getSelectedItem().setPriority("low");
+            bindList.getSelectionModel().getSelectedItem().setPriority("Low");
             control.refresh();
         });
         option3.setOnAction(e->{

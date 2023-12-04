@@ -20,17 +20,17 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <ListView fx:id="TitleView" layoutX="38.0" layoutY="104.0" maxHeight="516.0" maxWidth="234.0" onContextMenuRequested="#showMenu" onMouseClicked="#TitleViewClick" prefHeight="516.0" prefWidth="234.0" style="-fx-background-color: ebebeb;" />
+                  <ListView fx:id="TitleView" layoutX="38.0" layoutY="104.0" maxHeight="516.0" maxWidth="234.0" onContextMenuRequested="#showMenu" onMouseClicked="#TitleViewClick" prefHeight="516.0" prefWidth="234.0" style="-fx-background-color: #ebebeb; -fx-border-color: #80a4b2; -fx-background-radius: 8; -fx-border-radius: 8;" />
                   <Separator layoutX="22.0" layoutY="69.0" prefHeight="0.0" prefWidth="421.0" />
-                  <ListView fx:id="DeadlineView" layoutX="276.0" layoutY="104.0" maxHeight="516.0" maxWidth="180.0" prefHeight="516.0" prefWidth="180.0" style="-fx-background-color: ebebeb;" />
+                  <ListView fx:id="DeadlineView" layoutX="276.0" layoutY="104.0" maxHeight="516.0" maxWidth="180.0" prefHeight="516.0" prefWidth="180.0" style="-fx-background-color: ebebeb; -fx-border-color: #80a4b2; -fx-border-radius: 8; -fx-background-radius: 8;" />
                   <Label layoutX="275.0" layoutY="77.0" text="Deadling">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                   <Label layoutX="38.0" layoutY="78.0" text="Title">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
@@ -39,15 +39,15 @@
          <right>
             <Pane prefHeight="636.0" prefWidth="280.0" style="-fx-background-color: F5F5F5;" BorderPane.alignment="CENTER">
                <children>
-                  <TextArea fx:id="DescriptionView" layoutX="8.0" layoutY="105.0" prefHeight="216.0" prefWidth="257.0" />
+                  <TextArea fx:id="DescriptionView" layoutX="8.0" layoutY="105.0" prefHeight="216.0" prefWidth="257.0" style="-fx-background-color: transparent; -fx-background-radius: 60; -fx-border-radius: 60;" />
                   <Label layoutX="11.0" layoutY="77.0" prefHeight="20.0" prefWidth="120.0" text="Description">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                   <Label layoutX="10.0" layoutY="338.0" prefHeight="24.0" prefWidth="108.0" text="CreateTime:">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
                   <Label fx:id="CreateTimeLabel" layoutX="121.0" layoutY="338.0" prefHeight="20.0" prefWidth="144.0" text="Null">
@@ -57,7 +57,7 @@
                   </Label>
                   <Label layoutX="10.0" layoutY="369.0" prefHeight="24.0" prefWidth="103.0" text="Category:">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
                   <Label fx:id="CategoryLabel" layoutX="121.0" layoutY="371.0" prefHeight="24.0" prefWidth="145.0" text="Null">
