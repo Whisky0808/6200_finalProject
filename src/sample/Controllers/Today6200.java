@@ -136,6 +136,13 @@ public class Today6200 implements Initializable {
                                     TitleView.widthProperty().get() - 20, TitleView.widthProperty()));
                             hBox.setSpacing(10);
                             setGraphic(hBox);
+                            selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                                if (isNowSelected) {
+                                    setBackground(new Background(new BackgroundFill(Color.web("#0097b2"), CornerRadii.EMPTY, Insets.EMPTY)));
+                                } else {
+                                    setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+                                }
+                            });
                         }
                     }
 
@@ -199,9 +206,10 @@ public class Today6200 implements Initializable {
                             LinearGradient linearGradient = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
                                     new Stop[]{
 
-                                            new Stop(0.7, Color.TRANSPARENT),
+                                            new Stop(0.8, Color.TRANSPARENT),
                                             new Stop(1, getPriorityColor(item))
                                     });
+
                             setText(item.getPriority());
                             setBackground(new Background(new BackgroundFill(linearGradient, CornerRadii.EMPTY, Insets.EMPTY)));
                         }

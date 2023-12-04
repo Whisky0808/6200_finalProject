@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -143,7 +144,20 @@ public class Upcomming6200 implements Initializable {
                                             new Stop(0.9, Color.TRANSPARENT),
                                             new Stop(1, getPriorityColor(item))
                                     });
+                            LinearGradient linearGradient2 = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
+                                    new Stop[]{
+
+                                            new Stop(0.9, Color.web("#0097b2")),
+                                            new Stop(1, getPriorityColor(item))
+                                    });
                             setBackground(new Background(new BackgroundFill(linearGradient, CornerRadii.EMPTY, Insets.EMPTY)));
+                            selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                                if (isNowSelected) {
+                                    setBackground(new Background(new BackgroundFill(linearGradient2, CornerRadii.EMPTY, Insets.EMPTY)));
+                                } else {
+                                    setBackground(new Background(new BackgroundFill(linearGradient, CornerRadii.EMPTY, Insets.EMPTY)));
+                                }
+                            });
                         }
                     }
                 };
@@ -209,7 +223,12 @@ public class Upcomming6200 implements Initializable {
                             setText(item.getDeadline().format(formatter));
 
                         }
+                        selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                            setTextFill(Color.BLACK);
+                            setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+                        });
                     }
+
                 };
             }
         });
