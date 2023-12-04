@@ -32,6 +32,9 @@ public class TodoData {
     }
 
     public void addTodoItem(TodoItem item) {
+    	if ("Daily".equals(item.getCategory())) {
+            item.setDeadline(LocalDate.now());
+    	}
         todoItems.add(item);
     }
 
@@ -49,12 +52,7 @@ public class TodoData {
             todoItems = FXCollections.observableArrayList(itemsArray);
             
          // 遍历每个项目，更新 "daily" 类别的项目的 deadline
-            for (TodoItem item : todoItems) {
-                if ("Daily".equals(item.getCategory())) {
-                    item.setDeadline(LocalDate.now());
-                    
-                }
-            }
+            updateDailyDDl(todoItems);
 
 //            // 更新每个项目的状态
 //            for (TodoItem item : todoItems) {
@@ -65,6 +63,15 @@ public class TodoData {
         }
     }
     
+    public void updateDailyDDl(ObservableList<TodoItem> todoItems) {
+    	for (TodoItem item : todoItems) {
+            if ("Daily".equals(item.getCategory())) {
+                item.setDeadline(LocalDate.now());
+                
+            }
+        }
+    	
+    }
 //    private void updateStatusBasedOnDate(TodoItem item) {
 //        LocalDate date = item.getDeadline();
 //        if (date.equals(LocalDate.now())) {
@@ -98,3 +105,4 @@ public class TodoData {
 
 
 }
+

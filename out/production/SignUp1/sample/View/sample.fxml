@@ -19,12 +19,12 @@
                   <Font name="Arial Black" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="57.0" layoutY="175.0" text="SIGNUP UI" textFill="WHITE">
+            <Label layoutX="57.0" layoutY="175.0" text="Login" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="36.0" />
                </font>
             </Label>
-            <Label layoutX="61.0" layoutY="214.0" prefHeight="44.0" prefWidth="207.0" text="become a better Javafx interface designer in 1000 days" textFill="WHITE" wrapText="true" />
+            <Label layoutX="61.0" layoutY="218.0" prefHeight="44.0" prefWidth="207.0" text="A powerful Todo List app for personal use" textFill="WHITE" wrapText="true" />
          </children></Pane>
    </left>
    <right>
