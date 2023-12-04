@@ -19,6 +19,7 @@ public class FutureContexMenu extends MycontexMenu<TodoItem>{
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(e->{
             TodoData.getInstance().deleteTodoItem(bindList.getSelectionModel().getSelectedItem());
+            control.refresh();
         });
         option1.setOnAction(e->{
             bindList.getSelectionModel().getSelectedItem().setPriority("high");

@@ -125,6 +125,7 @@ public class Today6200 implements Initializable {
                         if (empty || item == null) {
                             setText(null);
                             setGraphic(null);
+                            setBackground(null);
                         }  else {
                             imageView1.setImage(new Image(getCategoryUrl(item), 22, 22, true, true));
                             label.setText(item.getShortDescription());
@@ -202,6 +203,7 @@ public class Today6200 implements Initializable {
                         if (empty || item == null) {
                             setText(null);
                             setGraphic(null);
+                            setBackground(null);
                         }  else {
                             LinearGradient linearGradient = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
                                     new Stop[]{

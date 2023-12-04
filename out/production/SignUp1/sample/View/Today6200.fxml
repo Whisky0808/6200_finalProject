@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="636.0" prefWidth="738.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.Today6200">
+   <children>
+      <BorderPane prefHeight="636.0" prefWidth="738.0" style="-fx-background-color: White;">
+         <left>
+            <Pane prefHeight="636.0" prefWidth="464.0" style="-fx-background-color: F5F5F5;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="27.0" layoutY="30.0" text="Today Task">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="TitleView" layoutX="38.0" layoutY="104.0" onContextMenuRequested="#showMenu" onMouseClicked="#TitleViewClick" prefHeight="516.0" prefWidth="283.0" style="-fx-background-color: WHITE;" />
+                  <Separator layoutX="22.0" layoutY="69.0" prefHeight="0.0" prefWidth="421.0" />
+                  <ListView fx:id="PriorityView" layoutX="326.0" layoutY="104.0" prefHeight="516.0" prefWidth="130.0" style="-fx-background-color: WHITE;" />
+                  <Label layoutX="327.0" layoutY="77.0" text="Priority">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="38.0" layoutY="78.0" text="Title">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </left>
+         <right>
+            <Pane prefHeight="636.0" prefWidth="280.0" style="-fx-background-color: F5F5F5;" BorderPane.alignment="CENTER">
+               <children>
+                  <TextArea fx:id="DescriptionView" layoutX="8.0" layoutY="105.0" prefHeight="216.0" prefWidth="257.0" />
+                  <Label layoutX="11.0" layoutY="77.0" prefHeight="20.0" prefWidth="120.0" text="Description">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="338.0" prefHeight="24.0" prefWidth="108.0" text="CreateTime:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="CreateTimeLabel" layoutX="121.0" layoutY="338.0" prefHeight="20.0" prefWidth="144.0" text="Null">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="369.0" prefHeight="24.0" prefWidth="103.0" text="Category:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="CategoryLabel" layoutX="121.0" layoutY="371.0" prefHeight="24.0" prefWidth="145.0" text="Null">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </right>
+      </BorderPane>
+   </children>
+</Pane>
