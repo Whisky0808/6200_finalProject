@@ -56,7 +56,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="TOP_LEFT" buttonType="RAISED" onAction="#Important" prefHeight="25.0" prefWidth="173.0" text="Important">
+                  <JFXButton alignment="TOP_LEFT" buttonType="RAISED" onAction="#Previous" prefHeight="25.0" prefWidth="173.0" text="Previous">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
