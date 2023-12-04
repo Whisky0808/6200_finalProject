@@ -48,10 +48,11 @@ public class TodoData {
             TodoItem[] itemsArray = mapper.readValue(Files.newBufferedReader(path), TodoItem[].class);
             todoItems = FXCollections.observableArrayList(itemsArray);
             
-            // 遍历每个项目，更新 "daily" 类别的项目的 deadline
+         // 遍历每个项目，更新 "daily" 类别的项目的 deadline
             for (TodoItem item : todoItems) {
-                if ("daily".equals(item.getCategory())) {
+                if ("Daily".equals(item.getCategory())) {
                     item.setDeadline(LocalDate.now());
+                    
                 }
             }
 
