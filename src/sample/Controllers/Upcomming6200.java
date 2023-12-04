@@ -8,14 +8,18 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
+import javafx.scene.image.WritableImage;
+import javafx.scene.input.*;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.util.Callback;
 import sample.Data.TodoData;
 import sample.Data.TodoItem;
@@ -63,11 +67,11 @@ public class Upcomming6200 implements Initializable {
     private String getCategoryUrl(TodoItem item){
         return "";
     }
-    private String getPriorityColor(TodoItem item){
-        Map<String, String> map = new HashMap<String, String>() {{
-            put("high", "red");
-            put("low", "green");
-            put("medium","yellow");
+    private Color getPriorityColor(TodoItem item){
+        Map<String, Color> map = new HashMap<String, Color>() {{
+            put("high", Color.RED);
+            put("low", Color.GREEN);
+            put("medium",Color.YELLOW);
         }};
         return map.get(item.getPriority());
     }
@@ -98,7 +102,7 @@ public class Upcomming6200 implements Initializable {
             @Override
             public ListCell<TodoItem> call(ListView<TodoItem> param) {
 
-                return new ListCell<TodoItem>(){
+                ListCell<TodoItem> cell= new ListCell<TodoItem>(){
                     private final ImageView imageView1 = new ImageView();
                     private final ImageView imageView2 = new ImageView();
                     private final Label label = new Label();
@@ -116,13 +120,55 @@ public class Upcomming6200 implements Initializable {
                             HBox.setHgrow(spacer, Priority.ALWAYS);
                             HBox hBox = new HBox(imageView1, label, spacer, imageView2);
                             hBox.prefWidthProperty().bind(Bindings.createDoubleBinding(() ->
-                                    TitleView.widthProperty().get() - 20, TitleView.widthProperty()));
+                                    TitleView.widthProperty().get() - 50, TitleView.widthProperty()));
                             hBox.setSpacing(10);
                             setGraphic(hBox);
-                            setStyle("-fx-background-color:"+getPriorityColor(item)+";");
+                            LinearGradient linearGradient = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
+                                    new Stop[]{
+
+                                            new Stop(0.9, Color.TRANSPARENT),
+                                            new Stop(1, getPriorityColor(item))
+                                    });
+                            setBackground(new Background(new BackgroundFill(linearGradient, CornerRadii.EMPTY, Insets.EMPTY)));
                         }
                     }
                 };
+                cell.setOnDragDetected(event -> {
+                    if (!cell.isEmpty()) {
+                        SnapshotParameters snapshotParameters = new SnapshotParameters();
+                        WritableImage snapshot = cell.snapshot(snapshotParameters, null);
+                        Dragboard db = cell.startDragAndDrop(TransferMode.MOVE);
+                        ClipboardContent cc = new ClipboardContent();
+                        cc.putString(String.valueOf(cell.getIndex()));
+                        db.setContent(cc);
+                        db.setDragView(snapshot);
+                        event.consume();
+                    }
+                });
+                cell.setOnDragOver(event -> {
+                    if (event.getGestureSource() != cell && event.getDragboard().hasString()) {
+                        event.acceptTransferModes(TransferMode.MOVE);
+                    }
+                    event.consume();
+                });
+                cell.setOnDragDropped(event -> {
+                    Dragboard db = event.getDragboard();
+                    if (db.hasString()) {
+                        int draggedIndex = Integer.parseInt(db.getString());
+                        int dropIndex = cell.getIndex();
+                        if (draggedIndex != dropIndex) {
+                            TodoItem data1=TitleView.getItems().get(draggedIndex);
+                            TodoItem data2=TitleView.getItems().get(dropIndex);
+                            int index1=TodoData.getInstance().getTodoItems().indexOf(data1);
+                            int index2=TodoData.getInstance().getTodoItems().indexOf(data2);
+                            TodoData.getInstance().getTodoItems().set(index1,data2);
+                            TodoData.getInstance().getTodoItems().set(index2,data1);
+                            refresh();
+                        }
+                    }
+                    event.consume();
+                });
+                return cell;
             }
         });
     }
