@@ -41,26 +41,35 @@ public class Dashboard implements Initializable {
 
     Stage stage = null;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    private void systemTray(Stage s){
         try {
             Toolkit.getDefaultToolkit();
-            URL imageUrl = Main.class.getResource("/sample/img/testicon.png");
+            URL imageUrl = Main.class.getResource("/sample/img/icon.png");
             Image image = Toolkit.getDefaultToolkit().getImage(imageUrl);
-            TrayIcon trayIcon = new TrayIcon(image);
+            PopupMenu trayMenu = new PopupMenu();
+            MenuItem show = new MenuItem("show");
+            MenuItem exit = new MenuItem("exit");
             SystemTray tray = SystemTray.getSystemTray();
-
-            ActionListener listener = e -> Platform.runLater(() -> {
-                System.out.println("click trayicon");
-                stage = (Stage) window.getScene().getWindow();
-                stage.show();
+            trayMenu.add(show);
+            trayMenu.add(exit);
+            TrayIcon trayIcon = new TrayIcon(image,"TaskManager",trayMenu);
+            trayIcon.setImageAutoSize(true);
+            show.addActionListener(actionListener -> {
+                Platform.runLater(s::show);
+                tray.remove(trayIcon);
             });
-            trayIcon.addActionListener(listener);
-
+            exit.addActionListener(actionListener -> {
+                System.out.println("click exit");
+                System.exit(0);
+            });
             tray.add(trayIcon);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
 
         Exit.setOnMouseClicked(e -> {
@@ -82,6 +91,8 @@ public class Dashboard implements Initializable {
             Platform.runLater(() -> {
                 if (SystemTray.isSupported()) {
                     stage = (Stage) window.getScene().getWindow();
+                    systemTray(stage);
+                    Platform.setImplicitExit(false);
                     stage.hide();
                 } else {
                     System.exit(0);
