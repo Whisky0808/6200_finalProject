@@ -32,6 +32,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class Upcomming6200 implements Initializable {
+    String css = this.getClass().getResource("/sample/Style/ShowTask.css").toExternalForm();
     private int showMode;
     private FutureContexMenu menu;
     private SortedList<TodoItem> sortedView;
@@ -65,7 +66,19 @@ public class Upcomming6200 implements Initializable {
         return "";
     }
     private String getCategoryUrl(TodoItem item){
-        return "";
+        switch (item.getCategory()) {
+            case "Daily" :
+                return "/sample/img/Daily.png";
+            case "Work" :
+                return "/sample/img/Work.png";
+
+            case "Study" :
+                return "/sample/img/Study.png";
+
+            case "Other" :
+                return "/sample/img/Other.png";
+        }
+        return "/sample/img/notfind.png";
     }
     private Color getPriorityColor(TodoItem item){
         Map<String, Color> map = new HashMap<String, Color>() {{
@@ -87,6 +100,7 @@ public class Upcomming6200 implements Initializable {
         );
     }
     private void TitleViewInitialize(){
+        TitleView.getStylesheets().add(css);
         TitleView.setItems(FutureItems);
         TitleView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
@@ -113,9 +127,9 @@ public class Upcomming6200 implements Initializable {
                             setText(null);
                             setGraphic(null);
                         }  else {
-                            imageView1.setImage(new Image("/sample/img/close.png", 20, 20, true, true));
+                            imageView1.setImage(new Image(getCategoryUrl(item), 22, 22, true, true));
                             label.setText(item.getShortDescription());
-                            imageView2.setImage(new Image("/sample/img/close.png", 20, 20, true, true));
+                            imageView2.setImage(new Image("/sample/img/close.png", 22, 22, true, true));
                             Region spacer = new Region();
                             HBox.setHgrow(spacer, Priority.ALWAYS);
                             HBox hBox = new HBox(imageView1, label, spacer, imageView2);
@@ -133,6 +147,11 @@ public class Upcomming6200 implements Initializable {
                         }
                     }
                 };
+                cell.setOnMouseClicked(event -> {
+                    if (!cell.isEmpty()){
+                        cell.setTextFill(Color.BLUE);
+                    }
+                });
                 cell.setOnDragDetected(event -> {
                     if (!cell.isEmpty()) {
                         SnapshotParameters snapshotParameters = new SnapshotParameters();
@@ -168,6 +187,7 @@ public class Upcomming6200 implements Initializable {
                     }
                     event.consume();
                 });
+                cell.setPrefHeight(30);
                 return cell;
             }
         });
@@ -181,6 +201,7 @@ public class Upcomming6200 implements Initializable {
                     @Override
                     protected void updateItem(TodoItem item,boolean empty){
                         super.updateItem(item,empty);
+                        setPrefHeight(30);
                         if (empty || item == null) {
                             setText(null);
                             setGraphic(null);

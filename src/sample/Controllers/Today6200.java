@@ -66,7 +66,19 @@ public class Today6200 implements Initializable {
         return "";
     }
     private String getCategoryUrl(TodoItem item){
-        return "";
+        switch (item.getCategory()) {
+            case "Daily" :
+                return "/sample/img/Daily.png";
+            case "Work" :
+                return "/sample/img/Work.png";
+
+            case "Study" :
+                return "/sample/img/Study.png";
+
+            case "Other" :
+                return "/sample/img/Other.png";
+        }
+        return "/sample/img/notfind.png";
     }
     private Color getPriorityColor(TodoItem item){
         Map<String, Color> map = new HashMap<String, Color>() {{
@@ -114,9 +126,9 @@ public class Today6200 implements Initializable {
                             setText(null);
                             setGraphic(null);
                         }  else {
-                            imageView1.setImage(new Image("/sample/img/close.png", 20, 20, true, true));
+                            imageView1.setImage(new Image(getCategoryUrl(item), 22, 22, true, true));
                             label.setText(item.getShortDescription());
-                            imageView2.setImage(new Image("/sample/img/close.png", 20, 20, true, true));
+                            imageView2.setImage(new Image("/sample/img/close.png", 22, 22, true, true));
                             Region spacer = new Region();
                             HBox.setHgrow(spacer, Priority.ALWAYS);
                             HBox hBox = new HBox(imageView1, label, spacer, imageView2);
@@ -128,6 +140,7 @@ public class Today6200 implements Initializable {
                     }
 
                 };
+
                 cell.setOnDragDetected(event -> {
                     if (!cell.isEmpty()) {
                         SnapshotParameters snapshotParameters = new SnapshotParameters();
@@ -163,6 +176,7 @@ public class Today6200 implements Initializable {
                     }
                     event.consume();
                 });
+                cell.setPrefHeight(30);
                 return cell;
             }
         });
@@ -177,6 +191,7 @@ public class Today6200 implements Initializable {
                     @Override
                     protected void updateItem(TodoItem item,boolean empty){
                         super.updateItem(item,empty);
+                        setPrefHeight(30);
                         if (empty || item == null) {
                             setText(null);
                             setGraphic(null);
