@@ -97,7 +97,7 @@ public class newTaskAdd implements Initializable {
             boolean completed = false;
             
             if(Hpriority) {
-            	 priority = "hight";
+            	 priority = "high";
      
             }else if(Lpriority) {
             	 priority = "low";
@@ -111,6 +111,7 @@ public class newTaskAdd implements Initializable {
             }
             
             clearText();
+            Categories.getItems().setAll("Daily", "Work", "Study","Others");
             
             
 		}catch(Exception e) {
