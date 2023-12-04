@@ -9,6 +9,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.SnapshotParameters;
@@ -27,7 +28,7 @@ import javafx.util.Callback;
 import sample.Data.TodoData;
 import sample.Data.TodoItem;
 
-
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -54,6 +55,12 @@ public class Upcomming6200 implements Initializable {
     @FXML Label CategoryLabel;
     @FXML Polygon PrevPage;
     @FXML Polygon NextPage;
+    
+    @FXML
+    private Pane progressorArea;
+    
+    private ProgressorController progressorControllerInstance;
+    
     private final ObjectProperty<TodoItem> selectedItem=new SimpleObjectProperty<>(null);
 
     @FXML public void showMenu(ContextMenuEvent event){
@@ -122,10 +129,51 @@ public class Upcomming6200 implements Initializable {
         DescriptionView.textProperty().bind(
                 Bindings.createStringBinding(() -> {
                     TodoItem todo = selectedItem.get();
+                    updateProgress(todo); // Update progress based on the selected item
                     return todo != null ?  todo.getDetails(): "";
                 }, selectedItem)
         );
     }
+    
+    
+    private void updateProgress(TodoItem selectedItem) {
+        if (selectedItem != null) {
+            // Fetch the ProgressorController instance
+            ProgressorController progressorController = getProgressorControllerInstance();
+
+            if (progressorController != null) {
+                // Call the updateProgress method of ProgressorController
+            	
+                progressorController.updateProgress(selectedItem.getDeadline());
+                System.out.print(selectedItem.getDeadline());
+            }
+        }
+    }
+
+    private ProgressorController getProgressorControllerInstance() {
+		// TODO Auto-generated method stub
+		return progressorControllerInstance;
+	}
+    
+    @FXML
+    private void Progressor(){
+        
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/progressorController.fxml"));
+            Pane progressorPane = loader.load();
+            progressorArea.getChildren().clear();
+            progressorArea.getChildren().add(progressorPane);
+            progressorControllerInstance = loader.getController();
+            
+            
+            System.out.println("Progressor loaded successfully!");
+        } catch (IOException exception) {
+            System.out.println("Exception while loading Progressor: " + exception.getMessage());
+        }
+    }
+    
+    
+    
     private void TitleViewInitialize(){
         TitleView.getStylesheets().add(css);
         TitleView.addEventFilter(ScrollEvent.SCROLL, Event::consume);
@@ -298,6 +346,7 @@ public class Upcomming6200 implements Initializable {
         TitleViewInitialize();
         DeadlineViewInitialize();
         LabelInitialize();
+        Progressor();
     }
     public void refresh(){
         LoadTodayItems();

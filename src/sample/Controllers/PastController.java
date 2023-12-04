@@ -1,5 +1,6 @@
 package sample.Controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -16,8 +17,10 @@ import javafx.collections.transformation.FilteredList;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -36,6 +39,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -44,6 +48,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Polygon;
 import javafx.util.Callback;
+import sample.Data.OtherData;
 import sample.Data.TodoData;
 import sample.Data.TodoItem;
 
@@ -56,6 +61,7 @@ public class PastController  implements Initializable {
     private Predicate<TodoItem> FilterFuture;
     private FilteredList<TodoItem> PastItems;
     private FilteredList<TodoItem> ShowItems;
+    private ProgressorController progressorControllerInstance;
     
     @FXML
     private ListView<TodoItem> TitleView;
@@ -68,6 +74,9 @@ public class PastController  implements Initializable {
     
     @FXML 
     Label CreateTimeLabel;
+    
+    @FXML
+    private Pane progressorArea;
     
     @FXML 
     Label CategoryLabel;
@@ -106,8 +115,26 @@ public class PastController  implements Initializable {
     private void setSelected(TodoItem item){
         selectedItem.set(item);
     }
+    
+    private void updateProgress(TodoItem selectedItem) {
+        if (selectedItem != null) {
+            // Fetch the ProgressorController instance
+            ProgressorController progressorController = getProgressorControllerInstance();
 
-    private String getcheckUrl(TodoItem item){
+            if (progressorController != null) {
+                // Call the updateProgress method of ProgressorController
+            	
+                progressorController.updateProgress(selectedItem.getDeadline());
+                System.out.print(selectedItem.getDeadline());
+            }
+        }
+    }
+
+    private ProgressorController getProgressorControllerInstance() {
+		// TODO Auto-generated method stub
+		return progressorControllerInstance;
+	}
+	private String getcheckUrl(TodoItem item){
 
         if (item.isSelected()){
             return "/sample/img/check.png";
@@ -149,6 +176,7 @@ public class PastController  implements Initializable {
         DescriptionView.textProperty().bind(
                 Bindings.createStringBinding(() -> {
                     TodoItem todo = selectedItem.get();
+                    updateProgress(todo); // Update progress based on the selected item
                     return todo != null ?  todo.getDetails(): "";
                 }, selectedItem)
         );
@@ -171,6 +199,8 @@ public class PastController  implements Initializable {
         TitleView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
             @Override
             public ListCell<TodoItem> call(ListView<TodoItem> param) {
+            	
+            	
 
                 ListCell<TodoItem> cell= new ListCell<TodoItem>(){
                     private final ImageView imageView1 = new ImageView();
@@ -217,6 +247,14 @@ public class PastController  implements Initializable {
                         }
                     }
                 };
+                cell.setOnMouseClicked(event -> {
+                    if (!cell.isEmpty()) {
+                    	System.out.print("in");
+                        TodoItem selectedItem = cell.getItem();
+                        setSelected(selectedItem); // Set the selected item
+                     
+                    }
+                });
                 cell.setOnMouseClicked(event -> {
                     if (!cell.isEmpty()){
                         cell.setTextFill(Color.BLUE);
@@ -279,7 +317,9 @@ public class PastController  implements Initializable {
                             setGraphic(null);
                             setBackground(null);
                         }  else {
+                        	
                             setText(item.getDeadline().format(formatter));
+
 
                         }
                         selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
@@ -314,6 +354,29 @@ public class PastController  implements Initializable {
             return index >= startindex && index < Math.min(startindex + 17, PastItems.size());
         });
     }
+    
+    
+    
+    @FXML
+    private void Progressor(){
+        
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/progressorController.fxml"));
+            Pane progressorPane = loader.load();
+            progressorArea.getChildren().clear();
+            progressorArea.getChildren().add(progressorPane);
+            progressorControllerInstance = loader.getController();
+            
+            
+            System.out.println("Progressor loaded successfully!");
+        } catch (IOException exception) {
+            System.out.println("Exception while loading Progressor: " + exception.getMessage());
+        }
+    }
+    
+    
+    
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showMode=0;
@@ -325,6 +388,9 @@ public class PastController  implements Initializable {
         TitleViewInitialize();
         DeadlineViewInitialize();
         LabelInitialize();
+        Progressor();
+        
+        
     }
     public void refresh(){
         LoadTodayItems();
