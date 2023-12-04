@@ -1,0 +1,13 @@
+.list-cell:selected {
+    -fx-text-fill: black;
+}
+
+.list-view .scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-opacity: 0;
+    -fx-content-display: none;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}

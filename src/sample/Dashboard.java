@@ -89,7 +89,7 @@ public class Dashboard implements Initializable {
 
     @FXML
     private void Today(javafx.event.ActionEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("View/Today.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("View/Today6200.fxml"));
         contentArea.getChildren().removeAll();
         contentArea.getChildren().setAll(fxml);
         try{
@@ -104,7 +104,7 @@ public class Dashboard implements Initializable {
 
     @FXML
     private void Upcomming(javafx.event.ActionEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("View/Upcomming.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("View/Upcomming6200.fxml"));
         contentArea.getChildren().removeAll();
         contentArea.getChildren().setAll(fxml);
         try{
@@ -116,8 +116,10 @@ public class Dashboard implements Initializable {
     }
 
     @FXML
-    private void Important(javafx.event.ActionEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("View/Important.fxml"));
+    private void Previous (javafx.event.ActionEvent event) throws IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("View/PreviousTask.fxml"));
+        System.out.print("Previous here");
+        
         contentArea.getChildren().removeAll();
         contentArea.getChildren().setAll(fxml);
         try{

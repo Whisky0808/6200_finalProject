@@ -103,12 +103,9 @@ public class newTaskAdd implements Initializable {
             	 priority = "low";
             }
 
-            if(Category.equals("Study") || Category.equals("Work")) {
-            	TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,priority,completed));           
-            }else if(Category.equals("Daily") || Category.equals("Others")) {
-            	OtherData.getInstance().addOtherItem(new OtherItem(shortDescription, Details, Category, deadValue,priority,completed));
 
-            }
+			TodoData.getInstance().addTodoItem(new TodoItem(shortDescription, Details, Category, deadValue,priority,completed));
+
             
             clearText();
             Categories.getItems().setAll("Daily", "Work", "Study","Others");

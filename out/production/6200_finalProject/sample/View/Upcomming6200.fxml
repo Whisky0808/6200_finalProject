@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
 <Pane prefHeight="636.0" prefWidth="738.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.Upcomming6200">
@@ -19,9 +20,9 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <ListView fx:id="TitleView" layoutX="38.0" layoutY="104.0" onContextMenuRequested="#showMenu" onMouseClicked="#TitleViewClick" prefHeight="516.0" prefWidth="234.0" style="-fx-background-color: WHITE;" />
+                  <ListView fx:id="TitleView" layoutX="38.0" layoutY="104.0" maxHeight="516.0" maxWidth="234.0" onContextMenuRequested="#showMenu" onMouseClicked="#TitleViewClick" prefHeight="516.0" prefWidth="234.0" style="-fx-background-color: WHITE;" />
                   <Separator layoutX="22.0" layoutY="69.0" prefHeight="0.0" prefWidth="421.0" />
-                  <ListView fx:id="DeadlineView" layoutX="276.0" layoutY="104.0" prefHeight="516.0" prefWidth="180.0" style="-fx-background-color: WHITE;" />
+                  <ListView fx:id="DeadlineView" layoutX="276.0" layoutY="104.0" maxHeight="516.0" maxWidth="180.0" prefHeight="516.0" prefWidth="180.0" style="-fx-background-color: WHITE;" />
                   <Label layoutX="275.0" layoutY="77.0" text="Deadling">
                      <font>
                         <Font size="18.0" />
@@ -64,6 +65,8 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
+                  <Polygon fx:id="NextPage" fill="#00aeff" layoutX="97.0" layoutY="580.0" onMouseClicked="#ToNextPage" points="-50.0, 38.0, -19.0, 26.0, -50.0, 13.0" stroke="#00aeff" strokeType="INSIDE" />
+                  <Polygon fx:id="PrevPage" fill="#00aeff" layoutX="90.0" layoutY="580.0" onMouseClicked="#ToPrevPage" points="-50.0, 38.0, -50.0, 13.0, -84.0, 25.0" stroke="#00aeff" strokeType="INSIDE" />
                </children>
             </Pane>
          </right>
