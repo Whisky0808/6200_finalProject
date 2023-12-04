@@ -1,13 +1,19 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.Data.TodoData;
+
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.URL;
+
 import sample.Controllers.Today6200;
 public class Main extends Application {
     double x,y = 0;
@@ -27,9 +33,10 @@ public class Main extends Application {
         });
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
-
+        //create tray
 
     }
+
 
 
     public static void main(String[] args) {

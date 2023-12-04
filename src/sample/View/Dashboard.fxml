@@ -90,7 +90,7 @@
                         <Image url="@../img/Minimize.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="Maximize" fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ToTray" fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/Maximize.png" />
                      </image>

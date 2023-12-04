@@ -126,7 +126,7 @@ public class PastController  implements Initializable {
             case "Study" :
                 return "/sample/img/Study.png";
 
-            case "Other" :
+            case "Others" :
                 return "/sample/img/Other.png";
         }
         return "/sample/img/notfind.png";

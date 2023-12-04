@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.Data.TodoData;
 
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,7 +31,7 @@ public class Dashboard implements Initializable {
     private ImageView Minimize;
 
     @FXML
-    private ImageView Maximize;
+    private ImageView ToTray;
 
     @FXML
     private BorderPane window;
@@ -40,8 +43,27 @@ public class Dashboard implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Exit.setOnMouseClicked(e -> {
+        try {
+            Toolkit.getDefaultToolkit();
+            URL imageUrl = Main.class.getResource("/sample/img/testicon.png");
+            Image image = Toolkit.getDefaultToolkit().getImage(imageUrl);
+            TrayIcon trayIcon = new TrayIcon(image);
+            SystemTray tray = SystemTray.getSystemTray();
 
+            ActionListener listener = e -> Platform.runLater(() -> {
+                System.out.println("click trayicon");
+                stage = (Stage) window.getScene().getWindow();
+                stage.show();
+            });
+            trayIcon.addActionListener(listener);
+
+            tray.add(trayIcon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        Exit.setOnMouseClicked(e -> {
             try{
 
                 TodoData.getInstance().storeTodoItems();
@@ -51,18 +73,20 @@ public class Dashboard implements Initializable {
                 System.out.println(exception.getMessage());
             }
             System.exit(0);
-
         });
         Minimize.setOnMouseClicked(e -> {
             stage = (Stage) window.getScene().getWindow();
             stage.setIconified(true);
         });
-        Maximize.setOnMouseClicked(e -> {
-            stage = (Stage) window.getScene().getWindow();
-            if(stage.isMaximized())
-                stage.setMaximized(false);
-            else
-                stage.setMaximized(true);
+        ToTray.setOnMouseClicked(e -> {
+            Platform.runLater(() -> {
+                if (SystemTray.isSupported()) {
+                    stage = (Stage) window.getScene().getWindow();
+                    stage.hide();
+                } else {
+                    System.exit(0);
+                }
+            });
         });
 
 
