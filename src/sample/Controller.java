@@ -25,10 +25,6 @@ public class Controller implements Initializable {
 
     @FXML
     private JFXTextField txtuser;
-
-    @FXML
-    private JFXTextField txtemail;
-
     @FXML
     private JFXPasswordField txtpass;
 
@@ -39,7 +35,7 @@ public class Controller implements Initializable {
 
     @FXML
     void signup(ActionEvent event) {
-        if(txtuser.getText().equals("") && txtemail.getText().equals("") && txtpass.getText().equals("")){
+        if(txtuser.getText().equals("")  && txtpass.getText().equals("")){
             try {
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
