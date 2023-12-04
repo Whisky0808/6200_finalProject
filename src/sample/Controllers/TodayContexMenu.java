@@ -22,8 +22,13 @@ public class TodayContexMenu extends MycontexMenu<TodoItem>{
     public void addmenu() {
         menu = new ContextMenu();
         Menu Priority=new Menu("Set Priority");
+        Menu Category=new Menu("Set Category");
         MenuItem option1 = new MenuItem("high");
         MenuItem option2 = new MenuItem("low");
+        MenuItem option3= new MenuItem("Daily");
+        MenuItem option4 = new MenuItem("Work");
+        MenuItem option5 = new MenuItem("Study");
+        MenuItem option6 = new MenuItem("Others");
         MenuItem deleteItem = new MenuItem("Delete");
         MenuItem EditDate = new MenuItem("EditDeadline");
         EditDate.setOnAction(e->{
@@ -58,7 +63,23 @@ public class TodayContexMenu extends MycontexMenu<TodoItem>{
             bindList.getSelectionModel().getSelectedItem().setPriority("low");
             control.refresh();
         });
-
+        option3.setOnAction(e->{
+            bindList.getSelectionModel().getSelectedItem().setCategory("Daily");
+            TodoData.getInstance().updateDailyDDl(TodoData.getInstance().getTodoItems());
+            control.refresh();
+        });
+        option4.setOnAction(e->{
+            bindList.getSelectionModel().getSelectedItem().setCategory("Work");
+            control.refresh();
+        });
+        option5.setOnAction(e->{
+            bindList.getSelectionModel().getSelectedItem().setCategory("Study");
+            control.refresh();
+        });
+        option6.setOnAction(e->{
+            bindList.getSelectionModel().getSelectedItem().setCategory("Others");
+            control.refresh();
+        });
         CheckMenuItem checkMenuItem = new CheckMenuItem("Complete");
         checkMenuItem.setOnAction(e->{
             if (!(bindList.getSelectionModel().getSelectedItem().isSelected())) {
@@ -73,8 +94,9 @@ public class TodayContexMenu extends MycontexMenu<TodoItem>{
             }
             control.refresh();
         });
-        menu.getItems().addAll(EditDate,Priority, deleteItem, checkMenuItem);
+        menu.getItems().addAll(EditDate,Priority,Category, deleteItem, checkMenuItem);
         Priority.getItems().addAll(option1,option2);
+        Category.getItems().addAll(option3,option4,option5,option6);
     }
     @Override
     public void show(ContextMenuEvent e){
