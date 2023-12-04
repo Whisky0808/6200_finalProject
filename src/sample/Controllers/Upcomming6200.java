@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.shape.Polygon;
 import javafx.util.Callback;
 import sample.Data.TodoData;
 import sample.Data.TodoItem;
@@ -51,6 +52,8 @@ public class Upcomming6200 implements Initializable {
     private TextArea DescriptionView;
     @FXML Label CreateTimeLabel;
     @FXML Label CategoryLabel;
+    @FXML Polygon PrevPage;
+    @FXML Polygon NextPage;
     private final ObjectProperty<TodoItem> selectedItem=new SimpleObjectProperty<>(null);
 
     @FXML public void showMenu(ContextMenuEvent event){
@@ -58,7 +61,20 @@ public class Upcomming6200 implements Initializable {
             menu.show(event);
         }
     }
-
+    @FXML
+    public void ToNextPage(MouseEvent e){
+        int tar=startindex+17;
+        if(tar<FutureItems.size()){
+            startindex=tar;
+        }
+        System.out.println(startindex);
+        refresh();
+    }
+    @FXML void ToPrevPage(MouseEvent e){
+        startindex= Math.max(startindex - 17, 0);
+        System.out.println(startindex);
+        refresh();
+    }
     @FXML
     public void TitleViewClick(MouseEvent e){
         setSelected(TitleView.getSelectionModel().getSelectedItem());
@@ -274,9 +290,9 @@ public class Upcomming6200 implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showMode=0;
+        startindex=0;
         menu=new FutureContexMenu(TitleView,this);
         LoadTodayItems();
-        startindex=0;
         LoadShowItems();
         DescriptionInitialize();
         TitleViewInitialize();
@@ -285,13 +301,12 @@ public class Upcomming6200 implements Initializable {
     }
     public void refresh(){
         LoadTodayItems();
-        startindex=0;
         LoadShowItems();
         TitleView.setItems(FXCollections.observableArrayList());
         DeadlineView.setItems(FXCollections.observableArrayList());
         if(showMode==0) {
-            TitleView.setItems(FutureItems);
-            DeadlineView.setItems(FutureItems);
+            TitleView.setItems(ShowItems);
+            DeadlineView.setItems(ShowItems);
         }
 
     }
