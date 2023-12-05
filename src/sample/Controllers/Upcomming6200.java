@@ -3,6 +3,8 @@ package sample.Controllers;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -62,7 +64,15 @@ public class Upcomming6200 implements Initializable {
     private ProgressorController progressorControllerInstance;
     
     private final ObjectProperty<TodoItem> selectedItem=new SimpleObjectProperty<>(null);
-
+    private void initializeListener() {
+        ChangeListener<TodoItem> listener = new ChangeListener<TodoItem>() {
+            @Override
+            public void changed(ObservableValue<? extends TodoItem> observable, TodoItem oldValue, TodoItem newValue) {
+                updateProgress(newValue); // Update progress based on the selected item
+            }
+        };
+        selectedItem.addListener(listener);
+    }
     @FXML public void showMenu(ContextMenuEvent event){
         if(TitleView.getSelectionModel().getSelectedItem()!=null) {
             menu.show(event);
@@ -129,7 +139,6 @@ public class Upcomming6200 implements Initializable {
         DescriptionView.textProperty().bind(
                 Bindings.createStringBinding(() -> {
                     TodoItem todo = selectedItem.get();
-                    updateProgress(todo); // Update progress based on the selected item
                     return todo != null ?  todo.getDetails(): "";
                 }, selectedItem)
         );
@@ -161,15 +170,13 @@ public class Upcomming6200 implements Initializable {
     
     @FXML
     private void Progressor(){
-        
     	try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/progressorController.fxml"));
             Pane progressorPane = loader.load();
             progressorArea.getChildren().clear();
             progressorArea.getChildren().add(progressorPane);
-            progressorControllerInstance = loader.getController();
-            
-            
+            progressorControllerInstance=loader.getController();
+            progressorArea.setVisible(false);
             System.out.println("Progressor loaded successfully!");
         } catch (IOException exception) {
             System.out.println("Exception while loading Progressor: " + exception.getMessage());
@@ -344,6 +351,7 @@ public class Upcomming6200 implements Initializable {
         showMode=0;
         startindex=0;
         menu=new FutureContexMenu(TitleView,this);
+        initializeListener();
         LoadTodayItems();
         LoadShowItems();
         DescriptionInitialize();

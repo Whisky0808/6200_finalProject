@@ -12,6 +12,8 @@ import java.util.function.Predicate;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 
@@ -88,7 +90,15 @@ public class PastController  implements Initializable {
     Polygon NextPage;
     
     private final ObjectProperty<TodoItem> selectedItem=new SimpleObjectProperty<>(null);
-
+    private void initializeListener() {
+        ChangeListener<TodoItem> listener = new ChangeListener<TodoItem>() {
+            @Override
+            public void changed(ObservableValue<? extends TodoItem> observable, TodoItem oldValue, TodoItem newValue) {
+                updateProgress(newValue); // Update progress based on the selected item
+            }
+        };
+        selectedItem.addListener(listener);
+    }
     @FXML public void showMenu(ContextMenuEvent event){
         if(TitleView.getSelectionModel().getSelectedItem()!=null) {
             menu.show(event);
@@ -115,18 +125,22 @@ public class PastController  implements Initializable {
     private void setSelected(TodoItem item){
         selectedItem.set(item);
     }
-    
+
     private void updateProgress(TodoItem selectedItem) {
         if (selectedItem != null) {
+            progressorArea.setVisible(true);
             // Fetch the ProgressorController instance
             ProgressorController progressorController = getProgressorControllerInstance();
 
             if (progressorController != null) {
                 // Call the updateProgress method of ProgressorController
-            	
+
                 progressorController.updateProgress(selectedItem.getDeadline());
                 System.out.print(selectedItem.getDeadline());
             }
+        }
+        else{
+            progressorArea.setVisible(false);
         }
     }
 
@@ -363,7 +377,7 @@ public class PastController  implements Initializable {
             progressorArea.getChildren().clear();
             progressorArea.getChildren().add(progressorPane);
             progressorControllerInstance = loader.getController();
-            
+            progressorArea.setVisible(false);
             
             System.out.println("Progressor loaded successfully!");
         } catch (IOException exception) {
@@ -379,6 +393,7 @@ public class PastController  implements Initializable {
         showMode=0;
         startindex=0;
         menu=new PastContextMenu(TitleView,this);
+        initializeListener();
         LoadTodayItems();
         LoadShowItems();
         DescriptionInitialize();

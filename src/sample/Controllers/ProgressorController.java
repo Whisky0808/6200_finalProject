@@ -52,7 +52,7 @@ public class ProgressorController implements Initializable{
 		if(daysBetween>0) {
 			 long totalDays = ChronoUnit.DAYS.between(currentDate, deadline.plusDays(1));
 	         long remainingDays = ChronoUnit.DAYS.between(currentDate, deadline);
-	         progress =  0.5;
+	         progress =  1.0 - (double) remainingDays / (double) totalDays;
 	         //System.out.print("totalDays"+totalDays+"remainingDays"+remainingDays);
 	         progressorBar.setProgress(progress);
 	         progressorIndicator.setProgress(progress);

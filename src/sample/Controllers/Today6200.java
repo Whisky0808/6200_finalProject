@@ -60,8 +60,6 @@ public class Today6200 implements Initializable {
     @FXML Label CategoryLabel;
     @FXML Polygon PrevPage;
     @FXML Polygon NextPage;
-    @FXML
-    private Pane progressorArea;
     
     private final ObjectProperty<TodoItem> selectedItem=new SimpleObjectProperty<>(null);
 
