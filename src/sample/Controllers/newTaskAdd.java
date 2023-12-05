@@ -97,10 +97,10 @@ public class newTaskAdd implements Initializable {
             boolean completed = false;
             
             if(Hpriority) {
-            	 priority = "high";
+            	 priority = "High";
      
             }else if(Lpriority) {
-            	 priority = "low";
+            	 priority = "Low";
             }
 
 

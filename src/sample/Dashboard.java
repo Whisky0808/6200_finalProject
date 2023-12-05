@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,9 +12,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.Data.OtherData;
 import sample.Data.TodoData;
 
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,7 +31,7 @@ public class Dashboard implements Initializable {
     private ImageView Minimize;
 
     @FXML
-    private ImageView Maximize;
+    private ImageView ToTray;
 
     @FXML
     private BorderPane window;
@@ -39,38 +41,69 @@ public class Dashboard implements Initializable {
 
     Stage stage = null;
 
+    private void systemTray(Stage s){
+        try {
+            Toolkit.getDefaultToolkit();
+            URL imageUrl = Main.class.getResource("/sample/img/icon.png");
+            Image image = Toolkit.getDefaultToolkit().getImage(imageUrl);
+            PopupMenu trayMenu = new PopupMenu();
+            MenuItem show = new MenuItem("show");
+            MenuItem exit = new MenuItem("exit");
+            SystemTray tray = SystemTray.getSystemTray();
+            trayMenu.add(show);
+            trayMenu.add(exit);
+            TrayIcon trayIcon = new TrayIcon(image,"TaskManager",trayMenu);
+            trayIcon.setImageAutoSize(true);
+            show.addActionListener(actionListener -> {
+                Platform.runLater(s::show);
+                tray.remove(trayIcon);
+            });
+            exit.addActionListener(actionListener -> {
+                System.out.println("click exit");
+                System.exit(0);
+            });
+            tray.add(trayIcon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Exit.setOnMouseClicked(e -> {
 
+
+        Exit.setOnMouseClicked(e -> {
             try{
 
                 TodoData.getInstance().storeTodoItems();
-                OtherData.getInstance().storeOtherItems();
 
 
             }catch (IOException exception){
                 System.out.println(exception.getMessage());
             }
             System.exit(0);
-
         });
         Minimize.setOnMouseClicked(e -> {
             stage = (Stage) window.getScene().getWindow();
             stage.setIconified(true);
         });
-        Maximize.setOnMouseClicked(e -> {
-            stage = (Stage) window.getScene().getWindow();
-            if(stage.isMaximized())
-                stage.setMaximized(false);
-            else
-                stage.setMaximized(true);
+        ToTray.setOnMouseClicked(e -> {
+            Platform.runLater(() -> {
+                if (SystemTray.isSupported()) {
+                    stage = (Stage) window.getScene().getWindow();
+                    systemTray(stage);
+                    Platform.setImplicitExit(false);
+                    stage.hide();
+                } else {
+                    System.exit(0);
+                }
+            });
         });
 
 
 
         try {
-            Parent fxml = FXMLLoader.load(getClass().getResource("View/Upcomming6200.fxml"));
+            Parent fxml = FXMLLoader.load(getClass().getResource("View/Today6200.fxml"));
             contentArea.getChildren().removeAll();
             contentArea.getChildren().setAll(fxml);
 
@@ -95,7 +128,6 @@ public class Dashboard implements Initializable {
         try{
 
             TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
 
         }catch (IOException exception){
             System.out.println(exception.getMessage());
@@ -109,7 +141,6 @@ public class Dashboard implements Initializable {
         contentArea.getChildren().setAll(fxml);
         try{
             TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
         }catch (IOException exception){
             System.out.println(exception.getMessage());
         }
@@ -124,47 +155,15 @@ public class Dashboard implements Initializable {
         contentArea.getChildren().setAll(fxml);
         try{
             TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
         }catch (IOException exception){
             System.out.println(exception.getMessage());
         }
     }
 
-    @FXML
-    private void Someday(ActionEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("View/progressorController.fxml"));
-        contentArea.getChildren().removeAll();
-        contentArea.getChildren().setAll(fxml);
-        try{
-            TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
-        }catch (IOException exception){
-            System.out.println(exception.getMessage());
-        }
-
-    }
-
-    @FXML
-    private void Trash(ActionEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("View/Trash.fxml"));
-        contentArea.getChildren().removeAll();
-        contentArea.getChildren().setAll(fxml);
-        try{
-
-            TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
-
-        }catch (IOException exception){
-            System.out.println(exception.getMessage());
-        }
-    }
-    
     @FXML
     void Addonce (ActionEvent event) throws Exception {
     	addOncePage();
     }
-    
-    
 
     @FXML
     void Addnew(ActionEvent event) throws Exception {

@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,24 +13,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="window" prefHeight="664.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="sample.Dashboard">
+<BorderPane fx:id="window" prefHeight="664.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Dashboard">
    <left>
       <Pane prefHeight="664.0" prefWidth="262.0" style="-fx-background-color: E9E9E9;" stylesheets="@../Style/style.css" BorderPane.alignment="CENTER">
          <children>
             <VBox layoutX="59.0" layoutY="36.0" prefHeight="240.0" prefWidth="189.0" spacing="15.0">
                <children>
-                  <JFXButton alignment="TOP_LEFT" buttonType="RAISED" onAction="#Inbox" prefHeight="25.0" prefWidth="173.0" text="Inbox">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Inbox.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
                   <JFXButton alignment="TOP_LEFT" buttonType="RAISED" onAction="#Today" prefHeight="25.0" prefWidth="212.0" text="Today">
                      <font>
                         <Font name="System Bold" size="12.0" />
@@ -56,7 +43,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="TOP_LEFT" buttonType="RAISED" onAction="#Previous" prefHeight="25.0" prefWidth="173.0" text="Previous">
+                  <JFXButton alignment="TOP_LEFT" buttonType="RAISED" onAction="#Previous" prefHeight="25.0" prefWidth="173.0" text="Past">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -64,30 +51,6 @@
                         <ImageView fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/important.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXButton alignment="TOP_LEFT" buttonType="RAISED" onAction="#Someday" prefHeight="25.0" prefWidth="173.0" text="Someday">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/target.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXButton alignment="TOP_LEFT" buttonType="RAISED" onAction="#Trash" prefHeight="25.0" prefWidth="173.0" text="Trash">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Trash.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -100,18 +63,12 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <ListView layoutX="31.0" layoutY="343.0" prefHeight="207.0" prefWidth="200.0" style="-fx-background-color: E9E9E9;" />
-            <Label layoutX="31.0" layoutY="351.0" text="Intent" textFill="#6ad02e">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <JFXButton buttonType="RAISED" layoutX="19.0" layoutY="570.0" onAction="#Addnew" prefHeight="52.0" prefWidth="232.0" style="-fx-background-color: #4DBCFF; -fx-background-radius: 10px;" text="Multiple +" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="19.0" layoutY="570.0" onAction="#Addnew" prefHeight="52.0" prefWidth="232.0" style="-fx-background-color: #4DBCFF; -fx-background-radius: 10px;" text="Add Task +" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="19.0" layoutY="505.0" onAction="#Addonce" prefHeight="52.0" prefWidth="232.0" style="-fx-background-color: #4DBCFF; -fx-background-radius: 10px;" text="Quick +" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="19.0" layoutY="505.0" onAction="#Addonce" prefHeight="52.0" prefWidth="232.0" style="-fx-background-color: #4DBCFF; -fx-background-radius: 10px;" text="Quick Add" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -133,7 +90,7 @@
                         <Image url="@../img/Minimize.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="Maximize" fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ToTray" fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/Maximize.png" />
                      </image>

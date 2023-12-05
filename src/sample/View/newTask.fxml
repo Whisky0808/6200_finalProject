@@ -45,7 +45,7 @@
             <DatePicker fx:id="Deadline" layoutX="151.0" layoutY="231.0" />
             <Label layoutX="35.0" layoutY="236.0" text="Deadline" />
             <ComboBox fx:id="Categories" layoutX="422.0" layoutY="231.0" prefWidth="150.0" promptText="Catagories" />
-            <JFXCheckBox fx:id="hightPriority" layoutX="151.0" layoutY="284.0" text="Hight" />
+            <JFXCheckBox fx:id="hightPriority" layoutX="151.0" layoutY="284.0" text="High" />
             <JFXCheckBox fx:id="lowPriority" layoutX="251.0" layoutY="284.0" text="Low" />
             <Label layoutX="40.0" layoutY="285.0" text="Priority" />
             <JFXButton buttonType="RAISED" layoutX="355.0" layoutY="320.0" onAction="#cancel" prefHeight="25.0" prefWidth="78.0" style="-fx-background-color: ed6a5f;" text="Cancel" />

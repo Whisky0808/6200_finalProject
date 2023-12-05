@@ -153,19 +153,16 @@ public class PastController  implements Initializable {
             case "Study" :
                 return "/sample/img/Study.png";
 
-            case "Other" :
+            case "Others" :
                 return "/sample/img/Other.png";
         }
         return "/sample/img/notfind.png";
     }
     private Color getPriorityColor(TodoItem item){
-        Map<String, Color> map = new HashMap<String, Color>() {
-        	private static final long serialVersionUID = 1L;
-
-		{
-            put("high", Color.RED);
-            put("low", Color.GREEN);
-            put("medium",Color.YELLOW);
+        Map<String, Color> map = new HashMap<String, Color>() {{
+            put("High", Color.web("#ef7474"));
+            put("Low", Color.web("#63f451"));
+            put("Medium",Color.web("#ebf451"));
         }};
         return map.get(item.getPriority());
     }

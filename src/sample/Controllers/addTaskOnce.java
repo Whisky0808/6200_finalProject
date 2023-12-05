@@ -35,10 +35,10 @@ public class addTaskOnce implements Initializable {
 	void ok(ActionEvent event) {
 		Error();
 		try {
-			String priority = "Hight";
+			String priority = "High";
 			String shortDescription = Description.getText();
             String Details = DetailsArea.getText();
-            String Category = "In Progress";
+            String Category = "Others";
             LocalDate deadValue = LocalDate.now();
       
             

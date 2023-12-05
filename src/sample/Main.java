@@ -1,15 +1,19 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.Data.OtherData;
 import sample.Data.TodoData;
 
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.URL;
+
 import sample.Controllers.Today6200;
 public class Main extends Application {
     double x,y = 0;
@@ -29,9 +33,10 @@ public class Main extends Application {
         });
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
-
+        //create tray
 
     }
+
 
 
     public static void main(String[] args) {
@@ -42,7 +47,6 @@ public class Main extends Application {
     public void stop() throws Exception {
         try {
             TodoData.getInstance().storeTodoItems();
-            OtherData.getInstance().storeOtherItems();
 
         } catch(IOException e) {
             System.out.println(e.getMessage());
@@ -54,7 +58,6 @@ public class Main extends Application {
         try {
             
             TodoData.getInstance().loadTodoItems();
-            OtherData.getInstance().loadOtherItems();
 
         } catch(IOException e) {
             throw e;
