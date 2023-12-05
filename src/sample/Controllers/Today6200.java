@@ -134,7 +134,7 @@ public class Today6200 implements Initializable {
         DescriptionView.textProperty().bind(
                 Bindings.createStringBinding(() -> {
                     TodoItem todo = selectedItem.get();
-                    updateProgress(todo); // Update progress based on the selected item
+                    //updateProgress(todo); // Update progress based on the selected item
                     return todo != null ?  todo.getDetails(): "";
                 }, selectedItem)
         );
@@ -280,7 +280,7 @@ public class Today6200 implements Initializable {
         FilterToday=(TodoItem)-> TodoItem.getDeadline().equals(LocalDate.now());
         TodayItems=new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(), FilterToday);
     }
-    private void updateProgress(TodoItem selectedItem) {
+    /*private void updateProgress(TodoItem selectedItem) {
         if (selectedItem != null) {
             // Fetch the ProgressorController instance
             ProgressorController progressorController = getProgressorControllerInstance();
@@ -292,14 +292,15 @@ public class Today6200 implements Initializable {
                 System.out.print(selectedItem.getDeadline());
             }
         }
-    }
 
-    private ProgressorController getProgressorControllerInstance() {
+    }*/
+
+    /*private ProgressorController getProgressorControllerInstance() {
 		// TODO Auto-generated method stub
 		return progressorControllerInstance;
-	}
+	}*/
     
-    @FXML
+    /*@FXML
     private void Progressor(){
         
     	try {
@@ -314,7 +315,7 @@ public class Today6200 implements Initializable {
         } catch (IOException exception) {
             System.out.println("Exception while loading Progressor: " + exception.getMessage());
         }
-    }
+    }*/
     
     private void LoadShowItems(){
         ShowItems = new FilteredList<TodoItem>(TodayItems, s -> {
@@ -333,7 +334,7 @@ public class Today6200 implements Initializable {
         TitleViewInitialize();
         PriorityViewInitialize();
         LabelInitialize();
-        Progressor();
+        //Progressor();
     }
     public void refresh(){
         LoadTodayItems();

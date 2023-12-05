@@ -138,6 +138,7 @@ public class Upcomming6200 implements Initializable {
     
     private void updateProgress(TodoItem selectedItem) {
         if (selectedItem != null) {
+            progressorArea.setVisible(true);
             // Fetch the ProgressorController instance
             ProgressorController progressorController = getProgressorControllerInstance();
 
@@ -147,6 +148,9 @@ public class Upcomming6200 implements Initializable {
                 progressorController.updateProgress(selectedItem.getDeadline());
                 System.out.print(selectedItem.getDeadline());
             }
+        }
+        else{
+            progressorArea.setVisible(false);
         }
     }
 
