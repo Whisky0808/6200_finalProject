@@ -31,3 +31,16 @@
 {
     -fx-background-color: linear-gradient(Gray, Black);
 }
+
+.progress-indicator > .determinate-indicator > .complete{
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-padding: 0.666667em; /* 8 */
+    -fx-shape: "M-0.25,6.083c0.843-0.758,4.583,4.833,5.75,4.833S14.5-1.5,15.917-0.917c1.292,0.532-8.75,17.083-10.5,17.083C3,16.167-1.083,6.833-0.25,6.083z";
+}
+.progress-indicator > .determinate-indicator > .not-complete{
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-padding: 0.666667em; /* 8 */
+    -fx-shape: "M76.563,490h336.875C455.547,490,490,455.547,490,413.438V76.563C490,34.453,455.547,0,413.437,0H76.563 C34.453,0,0,34.453,0,76.563v336.875C0,455.547,34.453,490,76.563,490z M124.835,175.445l50.61-50.611L245,194.39l69.555-69.555 l50.61,50.611L295.611,245l69.555,69.555l-50.61,50.611L245,295.611l-69.555,69.555l-50.61-50.61L194.389,245L124.835,175.445z";
+}

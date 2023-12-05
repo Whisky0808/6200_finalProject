@@ -33,14 +33,14 @@ public class PastContextMenu extends MycontexMenu<TodoItem> {
 	        
 	        CheckMenuItem checkMenuItem = new CheckMenuItem("Complete");
 	        checkMenuItem.setOnAction(e->{
-	            if (!(bindList.getSelectionModel().getSelectedItem().isSelected())) {
+	            if (!(bindList.getSelectionModel().getSelectedItem().getCompleted())) {
 	                checkMenuItem.setSelected(true);
-	                bindList.getSelectionModel().getSelectedItem().setSelected(true);
+	                bindList.getSelectionModel().getSelectedItem().setCompleted(true);
 	                control.refresh();
 	            }
 	            else{
 	                checkMenuItem.setSelected(false);
-	                bindList.getSelectionModel().getSelectedItem().setSelected(false);
+	                bindList.getSelectionModel().getSelectedItem().setCompleted(false);
 	                control.refresh();
 	            }
 	            control.refresh();
@@ -58,7 +58,7 @@ public class PastContextMenu extends MycontexMenu<TodoItem> {
 	            }
 	        }
 	        if(foundItem!=null){
-	            foundItem.setSelected(bindList.getSelectionModel().getSelectedItem().isSelected());
+	            foundItem.setSelected(bindList.getSelectionModel().getSelectedItem().getCompleted());
 	        }
 	        menu.show(bindList,e.getScreenX(),e.getScreenY());
 	    }

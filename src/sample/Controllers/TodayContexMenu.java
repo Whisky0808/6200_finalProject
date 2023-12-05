@@ -82,14 +82,14 @@ public class TodayContexMenu extends MycontexMenu<TodoItem>{
         });
         CheckMenuItem checkMenuItem = new CheckMenuItem("Complete");
         checkMenuItem.setOnAction(e->{
-            if (!(bindList.getSelectionModel().getSelectedItem().isSelected())) {
+            if (!(bindList.getSelectionModel().getSelectedItem().getCompleted())) {
                 checkMenuItem.setSelected(true);
-                bindList.getSelectionModel().getSelectedItem().setSelected(true);
+                bindList.getSelectionModel().getSelectedItem().setCompleted(true);
                 control.refresh();
             }
             else{
                 checkMenuItem.setSelected(false);
-                bindList.getSelectionModel().getSelectedItem().setSelected(false);
+                bindList.getSelectionModel().getSelectedItem().setCompleted(false);
                 control.refresh();
             }
             control.refresh();
@@ -114,7 +114,7 @@ public class TodayContexMenu extends MycontexMenu<TodoItem>{
             EditDate.setDisable("Daily".equals(bindList.getSelectionModel().getSelectedItem().getCategory()));
         }
         if(foundItem!=null){
-            foundItem.setSelected(bindList.getSelectionModel().getSelectedItem().isSelected());
+            foundItem.setSelected(bindList.getSelectionModel().getSelectedItem().getCompleted());
         }
         menu.show(bindList,e.getScreenX(),e.getScreenY());
     }

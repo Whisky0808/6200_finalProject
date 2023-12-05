@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -94,7 +95,7 @@ public class PastController  implements Initializable {
         ChangeListener<TodoItem> listener = new ChangeListener<TodoItem>() {
             @Override
             public void changed(ObservableValue<? extends TodoItem> observable, TodoItem oldValue, TodoItem newValue) {
-                updateProgress(newValue); // Update progress based on the selected item
+                    updateProgress(newValue); // Update progress based on the selected item
             }
         };
         selectedItem.addListener(listener);
@@ -110,12 +111,10 @@ public class PastController  implements Initializable {
         if(tar<PastItems.size()){
             startindex=tar;
         }
-        System.out.println(startindex);
         refresh();
     }
     @FXML void ToPrevPage(MouseEvent e){
         startindex= Math.max(startindex - 17, 0);
-        System.out.println(startindex);
         refresh();
     }
     @FXML
@@ -134,12 +133,17 @@ public class PastController  implements Initializable {
 
             if (progressorController != null) {
                 // Call the updateProgress method of ProgressorController
-
+                progressorController.setitem(selectedItem);
                 progressorController.updateProgress(selectedItem.getDeadline());
-                System.out.print(selectedItem.getDeadline());
             }
         }
         else{
+            ProgressorController progressorController = getProgressorControllerInstance();
+            if (progressorController != null) {
+                // Call the updateProgress method of ProgressorController
+                progressorController.setitem(null);
+                progressorController.updateProgress(LocalDate.now());
+            }
             progressorArea.setVisible(false);
         }
     }
@@ -150,7 +154,7 @@ public class PastController  implements Initializable {
 	}
 	private String getcheckUrl(TodoItem item){
 
-        if (item.isSelected()){
+        if (item.getCompleted()){
             return "/sample/img/check.png";
         }
         else{
@@ -187,7 +191,6 @@ public class PastController  implements Initializable {
         DescriptionView.textProperty().bind(
                 Bindings.createStringBinding(() -> {
                     TodoItem todo = selectedItem.get();
-                    updateProgress(todo); // Update progress based on the selected item
                     return todo != null ?  todo.getDetails(): "";
                 }, selectedItem)
         );
@@ -260,7 +263,6 @@ public class PastController  implements Initializable {
                 };
                 cell.setOnMouseClicked(event -> {
                     if (!cell.isEmpty()) {
-                    	System.out.print("in");
                         TodoItem selectedItem = cell.getItem();
                         setSelected(selectedItem); // Set the selected item
                      

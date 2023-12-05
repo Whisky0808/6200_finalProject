@@ -95,7 +95,7 @@ public class Today6200 implements Initializable {
 
     private String getcheckUrl(TodoItem item){
 
-        if (item.isSelected()){
+        if (item.getCompleted()){
             return "/sample/img/check.png";
         }
         else{

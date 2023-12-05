@@ -60,7 +60,7 @@ public class Upcomming6200 implements Initializable {
     
     @FXML
     private Pane progressorArea;
-    
+
     private ProgressorController progressorControllerInstance;
     
     private final ObjectProperty<TodoItem> selectedItem=new SimpleObjectProperty<>(null);
@@ -84,12 +84,10 @@ public class Upcomming6200 implements Initializable {
         if(tar<FutureItems.size()){
             startindex=tar;
         }
-        System.out.println(startindex);
         refresh();
     }
     @FXML void ToPrevPage(MouseEvent e){
         startindex= Math.max(startindex - 17, 0);
-        System.out.println(startindex);
         refresh();
     }
     @FXML
@@ -102,7 +100,7 @@ public class Upcomming6200 implements Initializable {
 
     private String getcheckUrl(TodoItem item){
 
-        if (item.isSelected()){
+        if (item.getCompleted()){
             return "/sample/img/check.png";
         }
         else{
@@ -153,9 +151,8 @@ public class Upcomming6200 implements Initializable {
 
             if (progressorController != null) {
                 // Call the updateProgress method of ProgressorController
-            	
+            	progressorController.setitem(selectedItem);
                 progressorController.updateProgress(selectedItem.getDeadline());
-                System.out.print(selectedItem.getDeadline());
             }
         }
         else{
