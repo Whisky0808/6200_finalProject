@@ -9,13 +9,13 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="636.0" prefWidth="738.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.Upcomming6200">
+<Pane prefHeight="636.0" prefWidth="738.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.PastController">
    <children>
       <BorderPane prefHeight="636.0" prefWidth="738.0" style="-fx-background-color: White;">
          <left>
             <Pane prefHeight="636.0" prefWidth="464.0" style="-fx-background-color: F5F5F5;" BorderPane.alignment="CENTER">
                <children>
-                  <Label layoutX="27.0" layoutY="30.0" text="Future Task">
+                  <Label layoutX="27.0" layoutY="30.0" text="Previous Task">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -67,7 +67,7 @@
                   </Label>
                   <Polygon fx:id="NextPage" fill="#00aeff" layoutX="97.0" layoutY="580.0" onMouseClicked="#ToNextPage" points="-50.0, 38.0, -19.0, 26.0, -50.0, 13.0" stroke="#00aeff" strokeType="INSIDE" />
                   <Polygon fx:id="PrevPage" fill="#00aeff" layoutX="90.0" layoutY="580.0" onMouseClicked="#ToPrevPage" points="-50.0, 38.0, -50.0, 13.0, -84.0, 25.0" stroke="#00aeff" strokeType="INSIDE" />
-                   <Pane fx:id="progressorArea" layoutX="15.0" layoutY="436.0" prefHeight="90.0" prefWidth="250.0" style="-fx-background-color: #e9e9e9;" />
+                  <Pane fx:id="progressorArea" layoutX="15.0" layoutY="436.0" prefHeight="90.0" prefWidth="250.0" style="-fx-background-color: #e9e9e9;" />
                </children>
             </Pane>
          </right>

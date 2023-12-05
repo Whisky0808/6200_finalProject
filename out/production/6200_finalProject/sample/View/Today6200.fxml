@@ -67,6 +67,7 @@
                   </Label>
                   <Polygon fx:id="NextPage" fill="#0084ff" layoutX="94.0" layoutY="575.0" onMouseClicked="#ToNextPage" points="-50.0, 39.0, -23.0, 27.0, -50.0, 14.0" stroke="#00aeff" strokeType="INSIDE" />
                   <Polygon fx:id="PrevPage" fill="#0084ff" layoutX="72.0" layoutY="576.0" onMouseClicked="#ToPrevPage" points="-64.0, 27.0, -34.0, 38.0, -34.0, 14.0" stroke="#00aeff" strokeType="INSIDE" />
+                  <Pane fx:id="progressorArea" layoutX="15.0" layoutY="436.0" prefHeight="90.0" prefWidth="250.0" style="-fx-background-color: #e9e9e9;" />
                </children>
             </Pane>
          </right>
