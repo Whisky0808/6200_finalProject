@@ -35,7 +35,7 @@ public class Controller implements Initializable {
 
     @FXML
     void signup(ActionEvent event) {
-        if(txtuser.getText().equals("")  && txtpass.getText().equals("")){
+        if(txtuser.getText().equals("6200")  && txtpass.getText().equals("123456")){
             try {
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
